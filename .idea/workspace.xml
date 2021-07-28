@@ -22,7 +22,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3428a491-f2bf-4c7a-826a-876672783a37" name="Default Changelist" comment="init" />
+    <list default="true" id="3428a491-f2bf-4c7a-826a-876672783a37" name="Default Changelist" comment="init">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -32,6 +34,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1vwnVMZUfCCKgMW8F9plC6dBbTy" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -134,7 +139,14 @@
       <option name="project" value="LOCAL" />
       <updated>1627482321718</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="init">
+      <created>1627482702995</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1627482702995</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -154,10 +166,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="init" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="184" y="121" width="1071" height="706" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1627482405200">
+    <state x="184" y="121" width="1071" height="730" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1627482430101">
       <screen x="0" y="25" width="1440" height="875" />
     </state>
-    <state x="184" y="121" width="1071" height="706" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.1440.875@0.25.1440.875" timestamp="1627482405200" />
+    <state x="184" y="121" width="1071" height="730" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.1440.875@0.25.1440.875" timestamp="1627482430101" />
     <state x="100" y="125" width="1240" height="675" key="AVDManager" timestamp="1627482405536">
       <screen x="0" y="25" width="1440" height="875" />
     </state>
@@ -166,9 +178,9 @@
       <screen x="0" y="25" width="1440" height="875" />
     </state>
     <state x="320" y="199" key="Vcs.Push.Dialog.v2/0.25.1440.875@0.25.1440.875" timestamp="1627482332233" />
-    <state x="442" y="200" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog" timestamp="1627482356583">
+    <state x="442" y="200" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog" timestamp="1627482626225">
       <screen x="0" y="25" width="1440" height="875" />
     </state>
-    <state x="442" y="200" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog/0.25.1440.875@0.25.1440.875" timestamp="1627482356582" />
+    <state x="442" y="200" key="com.intellij.openapi.vcs.changes.SpecificFilesViewDialog/0.25.1440.875@0.25.1440.875" timestamp="1627482626225" />
   </component>
 </project>
