@@ -28,62 +28,11 @@ class _AddPhotosPage extends State<AddPhotosPage> {
           children: <Widget>[
             SizedBox(height: 72),
             Text(
-              'Box description:\n',
+              'Add photos page\n',
               style: TextStyle(
                 fontSize: 28,
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(height: 16),
-            Text(
-              'name: \t${global['box_scanned']['meta']['name']}\n'
-                  'row: \t${global['box_scanned']['meta']['location']['row']}\n'
-                  'line: \t${global['box_scanned']['meta']['location']['line']}\n'
-                  'date: \t${global['box_scanned']['meta']['date_time']}\n',
-              style: TextStyle(
-                fontSize: 22,
-                color: Colors.black,
-              ),
-            ),
-            SizedBox(height: 16),
-            OutlineButton(
-              onPressed: () => {print('add photo')},
-              padding: EdgeInsets.all(10.0),
-              borderSide: BorderSide(color: Colors.blue),
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(6.0)),
-              ),
-              child: Column(
-                // Replace with a Row for horizontal icon + text
-                children: <Widget>[
-                  Icon(Icons.add_a_photo_outlined, color: Colors.blue),
-                  SizedBox(height: 4),
-                  Text("Photos",
-                      style: TextStyle(
-                        color: Colors.blue,
-                      )),
-                ],
-              ),
-            ),
-            SizedBox(height: 16),
-            OutlineButton(
-              onPressed: () => {print('edit intervals')},
-              padding: EdgeInsets.all(10.0),
-              borderSide: BorderSide(color: Colors.blue),
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(6.0)),
-              ),
-              child: Column(
-                // Replace with a Row for horizontal icon + text
-                children: <Widget>[
-                  Icon(Icons.edit_outlined, color: Colors.blue),
-                  SizedBox(height: 4),
-                  Text("Edit",
-                      style: TextStyle(
-                        color: Colors.blue,
-                      )),
-                ],
               ),
             ),
           ],
