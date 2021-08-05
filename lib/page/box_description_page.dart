@@ -10,6 +10,8 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'package:clik/network.dart';
 
+import 'add_photos_page.dart';
+
 class BoxDescriptionPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _BoxDescriptionPage();
@@ -48,7 +50,9 @@ class _BoxDescriptionPage extends State<BoxDescriptionPage> {
             ),
             SizedBox(height: 16),
             OutlineButton(
-              onPressed: () => {print('add photo')},
+              onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (BuildContext context) => AddPhotosPage(),
+              )),
               padding: EdgeInsets.all(10.0),
               borderSide: BorderSide(color: Colors.blue),
               shape: const RoundedRectangleBorder(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:clik/page/qr_create_page.dart';
 import 'package:clik/page/qr_scan_page.dart';
 import 'package:clik/widget/button_widget.dart';
 
