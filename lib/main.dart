@@ -4,6 +4,8 @@ import 'package:clik/page/qr_create_page.dart';
 import 'package:clik/page/qr_scan_page.dart';
 import 'package:clik/widget/button_widget.dart';
 
+var global = new Map<String, dynamic>(); // for all global vars
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
@@ -15,7 +17,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  static final String title = 'QR Code Scanner';
+  static final String title = 'ЦЛИК';
 
   @override
   Widget build(BuildContext context) => MaterialApp(
@@ -43,9 +45,9 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(
-      builder: (BuildContext context) => QRScanPage(),
-    ));
+    // Navigator.of(context).push(MaterialPageRoute(
+    //   builder: (BuildContext context) => QRScanPage(),
+    // ));
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),

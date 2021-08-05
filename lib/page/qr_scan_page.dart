@@ -1,9 +1,15 @@
+import 'dart:convert';
+
+import 'package:clik/page/box_description_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:clik/widget/button_widget.dart';
 
 import '../main.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'package:clik/network.dart';
 
 class QRScanPage extends StatefulWidget {
   @override
@@ -36,7 +42,7 @@ class _QRScanPageState extends State<QRScanPage> {
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: Colors.blue,
                 ),
               ),
               SizedBox(height: 72),
@@ -60,9 +66,16 @@ class _QRScanPageState extends State<QRScanPage> {
 
       if (!mounted) return;
 
+      print('$qrCode');
+      global['box_scanned'] = jsonDecode(await request_box_description(box_uuid: qrCode))[0];
+
       setState(() {
         this.qrCode = qrCode;
       });
+
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (BuildContext context) => BoxDescriptionPage(),
+      ));
     } on PlatformException {
       qrCode = 'Failed to get platform version.';
     }
