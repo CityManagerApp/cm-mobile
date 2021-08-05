@@ -17,7 +17,7 @@ class QRScanPage extends StatefulWidget {
 }
 
 class _QRScanPageState extends State<QRScanPage> {
-  String qrCode = 'Unknown';
+  String qrCode = '';
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -29,25 +29,16 @@ class _QRScanPageState extends State<QRScanPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                'Scan Result',
+                'Результат сканирования:\n$qrCode',
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 18,
                   color: Colors.blue,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 8),
-              Text(
-                '$qrCode',
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue,
-                ),
-              ),
-              SizedBox(height: 72),
+              SizedBox(height: 144),
               ButtonWidget(
-                text: 'Scan QR',
+                text: 'Сканировать',
                 onClicked: () => scanQRCode(),
               ),
             ],
