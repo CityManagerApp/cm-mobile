@@ -56,7 +56,7 @@ class _MainPageState extends State<MainPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ButtonWidget(
-              text: 'Scan QR Code',
+              text: 'Начать',
               onClicked: () => Navigator.of(context).push(MaterialPageRoute(
                 builder: (BuildContext context) => QRScanPage(),
               )),

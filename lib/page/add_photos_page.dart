@@ -91,7 +91,7 @@ class _AddPhotosPage extends State<AddPhotosPage> {
             OutlineButton(
               onPressed: () {
                 print('С галереи');
-                getImage(ImageSource.camera);
+                getImage(ImageSource.gallery);
               },
               padding: EdgeInsets.all(10.0),
               borderSide: BorderSide(color: Colors.blue),
