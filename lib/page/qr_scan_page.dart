@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:clik/page/box_description_page.dart';
+import 'package:clik/page/kern_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
@@ -58,10 +58,10 @@ class _QRScanPageState extends State<QRScanPage> {
   Future<void> scanQRCode() async {
     try {
       final qrCode = await FlutterBarcodeScanner.scanBarcode(
-        '#ff6666',
-        'Cancel',
+        '#AEDBFF',
+        'Назад',
         true,
-        ScanMode.QR,
+        ScanMode.DEFAULT,
       );
 
       if (!mounted) return;
@@ -74,7 +74,7 @@ class _QRScanPageState extends State<QRScanPage> {
       });
 
       Navigator.of(context).push(MaterialPageRoute(
-        builder: (BuildContext context) => BoxDescriptionPage(),
+        builder: (BuildContext context) => KernPage(),
       ));
     } on PlatformException {
       qrCode = 'Failed to get platform version.';

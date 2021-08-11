@@ -16,7 +16,7 @@ Future<String> request_box_description({
   print('request_well_description accessed');
 
   final http.Response response = await http.get(
-    'http://188.130.155.66/api/get_box/?uuid_box=bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+    'http://188.130.155.66/api/get_box/?uuid_box=$box_uuid',
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
