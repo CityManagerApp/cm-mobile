@@ -121,14 +121,15 @@ class _KernPage extends State<KernPage> {
                 ),
                 IgnorePointer(
                   child: AnimatedOpacity(
-                    duration: Duration(milliseconds: 500),
+                    duration: Duration(milliseconds: drawerAnimationDuration),
                     opacity: showDrawer ? 1.0 : 0.0,
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-                      child: Container(
-                        color: Colors.black.withOpacity(0.2),
-                      ),
+                    curve: Curves.linear,
+                    // child: BackdropFilter(
+                    //   filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                    child: Container(
+                      color: Colors.black.withOpacity(0.75),
                     ),
+                    // ),
                   ),
                 ),
                 AnimatedPositioned(
@@ -149,7 +150,7 @@ class _KernPage extends State<KernPage> {
 }
 
 bool showDrawer = false;
-int drawerAnimationDuration = 200;
+const int drawerAnimationDuration = 350;
 double drawerSurfaceRatio = 0.75;
 
 class DrawerWidget extends StatelessWidget {
@@ -163,12 +164,12 @@ class DrawerWidget extends StatelessWidget {
       child: AnimatedContainer(
           width: width,
           height: height * drawerSurfaceRatio,
-          duration: const Duration(milliseconds: 200),
+          duration: const Duration(milliseconds: drawerAnimationDuration),
           curve: Curves.easeInOut,
           decoration: BoxDecoration(
             color: showDrawer
-                ? Colors.black.withOpacity(0.75)
-                : Colors.blueAccent.withOpacity(0.9),
+                ? Color(0xe9404040)
+                : Colors.blueAccent.withOpacity(0.45),
           ),
           child: Padding(
             padding:
