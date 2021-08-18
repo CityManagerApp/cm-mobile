@@ -18,8 +18,20 @@ class KernPage extends StatefulWidget {
 }
 
 class _KernPage extends State<KernPage> {
+  toJsonItem(String s) {
+    var l = s.runes.toList();
+    return utf8.decode(l);
+  }
+
+  toJsonObject(String s) {
+    var l = s.runes.toList();
+    return json.decode(utf8.decode(l));
+  }
+
   @override
   Widget build(BuildContext context) {
+    // request_box_intervals(box_uuid: global['box_scanned']['meta']['name']);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(MyApp.title),
@@ -106,12 +118,21 @@ class _KernPage extends State<KernPage> {
                           ),
                           ListTile(
                             title: Text(
-                              'name: \t${global['box_scanned']['meta']['name']}\n'
-                              'row: \t${global['box_scanned']['meta']['location']['row']}\n'
-                              'line: \t${global['box_scanned']['meta']['location']['line']}\n'
-                              'date: \t${global['box_scanned']['meta']['date_time']}\n',
+                              'МЕСТОРОЖДЕНИЕ:\t${toJsonItem(global['field_scanned']['name'])}\n'
+                              'НОМЕР СКВАЖИНЫ:\t${toJsonItem(global['well_scanned']['name'])}\n'
+                              'ОБЩИЙ ИНТЕРВАЛ:\t${toJsonObject(global['interval_scanned']['meta'])['depth_start']}-${toJsonObject(global['interval_scanned']['meta'])['depth_end']}\n'
+                              'ИНТЕРВАЛ ОТБОРА:\t${toJsonObject(global['container_scanned']['meta'])['depth_start']}-${toJsonObject(global['container_scanned']['meta'])['depth_end']}\n'
+                              '${toJsonObject(global['container_scanned']['meta'])['storage_json']['label_line']}:\t${toJsonObject(global['container_scanned']['meta'])['storage_json']['line']}\n'
+                              '${toJsonObject(global['container_scanned']['meta'])['storage_json']['label_section']}:\t${toJsonObject(global['container_scanned']['meta'])['storage_json']['section']}\n'
+                              '${toJsonObject(global['container_scanned']['meta'])['storage_json']['label_row']}:\t${toJsonObject(global['container_scanned']['meta'])['storage_json']['row']}\n'
+                              '${toJsonObject(global['container_scanned']['meta'])['label_in_interval_number']}:\t${toJsonObject(global['container_scanned']['meta'])['in_interval_number']}\n'
+                              '${toJsonObject(global['interval_scanned']['meta'])['label_total_length']}:\t${toJsonObject(global['interval_scanned']['meta'])['total_length']}\n'
+                              '${toJsonObject(global['interval_scanned']['meta'])['label_extract_length']}:\t${toJsonObject(global['interval_scanned']['meta'])['extract_length']}\n'
+                              '${toJsonObject(global['interval_scanned']['meta'])['label_extract_reason']}:\t${toJsonObject(global['interval_scanned']['meta'])['extract_reason']}\n'
+                              '${toJsonObject(global['interval_scanned']['meta'])['label_kern_extract_equipment']}:\t${toJsonObject(global['interval_scanned']['meta'])['kern_extract_equipment']}\n'
+                              '${toJsonObject(global['interval_scanned']['meta'])['label_containers_count']}:\t${toJsonObject(global['interval_scanned']['meta'])['containers_count']}\n',
                               style: TextStyle(
-                                fontSize: 22,
+                                fontSize: 20,
                                 color: Colors.black,
                               ),
                             ),
@@ -125,5 +146,14 @@ class _KernPage extends State<KernPage> {
         ],
       ),
     );
+  }
+}
+
+class DrawerWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // double height = MediaQuery.of()
+
+    return Container();
   }
 }
