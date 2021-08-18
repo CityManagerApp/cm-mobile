@@ -29,14 +29,12 @@ class KernPage extends StatefulWidget {
 }
 
 class _KernPage extends State<KernPage> {
-  bool showDrawer = false;
-
   @override
   Widget build(BuildContext context) {
     // request_box_intervals(box_uuid: global['box_scanned']['meta']['name']);
 
     double height = MediaQuery.of(context).size.height;
-    int swipeDetectionThreshold = 25;
+    double swipeDetectionThreshold = 100;
 
     return SafeArea(
       child: Scaffold(
@@ -121,13 +119,15 @@ class _KernPage extends State<KernPage> {
                     ],
                   ),
                 ),
-                AnimatedOpacity(
-                  duration: Duration(milliseconds: drawerAnimationDuration),
-                  opacity: showDrawer ? 1.0 : 0.0,
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-                    child: Container(
-                      color: Colors.black.withOpacity(0.2),
+                IgnorePointer(
+                  child: AnimatedOpacity(
+                    duration: Duration(milliseconds: 500),
+                    opacity: showDrawer ? 1.0 : 0.0,
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                      child: Container(
+                        color: Colors.black.withOpacity(0.2),
+                      ),
                     ),
                   ),
                 ),
@@ -148,6 +148,7 @@ class _KernPage extends State<KernPage> {
   }
 }
 
+bool showDrawer = false;
 int drawerAnimationDuration = 200;
 double drawerSurfaceRatio = 0.75;
 
@@ -159,24 +160,41 @@ class DrawerWidget extends StatelessWidget {
 
     return ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(25.0)),
-      child: Container(
+      child: AnimatedContainer(
           width: width,
           height: height * drawerSurfaceRatio,
-          color: Colors.deepOrangeAccent,
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeInOut,
+          decoration: BoxDecoration(
+            color: showDrawer
+                ? Colors.black.withOpacity(0.75)
+                : Colors.blueAccent.withOpacity(0.9),
+          ),
           child: Padding(
             padding:
                 const EdgeInsets.symmetric(vertical: 2.0, horizontal: 10.0),
             child: Column(
               children: [
                 Icon(
-                  Icons.keyboard_arrow_up,
-                  size: 20,
+                  showDrawer
+                      ? Icons.keyboard_arrow_down
+                      : Icons.keyboard_arrow_up,
+                  size: 48,
+                  color: Colors.white.withOpacity(0.75),
                 ),
                 Column(
                   children: <Widget>[
                     ListTile(
-                      leading: Icon(Icons.all_inbox_rounded),
-                      title: Text('Описание ящика:'),
+                      leading: Icon(
+                        Icons.all_inbox_rounded,
+                        color: Colors.white,
+                      ),
+                      title: Text('Описание контейнера',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          )),
                     ),
                     ListTile(
                       title: Text(
@@ -194,8 +212,8 @@ class DrawerWidget extends StatelessWidget {
                         '${toJsonObject(global['interval_scanned']['meta'])['label_kern_extract_equipment']}:\t${toJsonObject(global['interval_scanned']['meta'])['kern_extract_equipment']}\n'
                         '${toJsonObject(global['interval_scanned']['meta'])['label_containers_count']}:\t${toJsonObject(global['interval_scanned']['meta'])['containers_count']}\n',
                         style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.black,
+                          fontSize: 14,
+                          color: Colors.white,
                         ),
                       ),
                     ),
