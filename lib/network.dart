@@ -16,7 +16,7 @@ Future<String> request_box_description({
   print('request box description ($box_uuid) accessed');
 
   final http.Response response = await http.get(
-    'http://webuser:webuser@10.100.8.35/api/v1/containermeta/$box_uuid',
+    'http://webuser:webuser@kernlab.devogip.ru/api/v1/containermeta/$box_uuid',
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8; Accept-Language=ru-RU',
     },
