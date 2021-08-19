@@ -130,7 +130,7 @@ class _KernPage extends State<KernPage> {
                         sigmaY: 5.0,
                       ),
                       child: Container(
-                        color: Color(0xff448aff).withOpacity(0.4),
+                        color: Color(0xff93b8f6).withOpacity(0.4),
                       ),
                     ),
                   ),
@@ -153,7 +153,7 @@ class _KernPage extends State<KernPage> {
 }
 
 bool showDrawer = false;
-const int drawerAnimationDuration = 250;
+const int drawerAnimationDuration = 228;
 double drawerSurfaceRatio = 0.75;
 
 class DrawerWidget extends StatelessWidget {
@@ -172,7 +172,7 @@ class DrawerWidget extends StatelessWidget {
           decoration: BoxDecoration(
             color: showDrawer
                 ? Color(0xff404040)
-                : Colors.blueAccent.withOpacity(0.65),
+                : Colors.blueAccent.withOpacity(0.8),
           ),
           child: Padding(
             padding:
