@@ -66,15 +66,16 @@ class _QRScanPageState extends State<QRScanPage> {
 
       if (!mounted) return;
 
+      setState(() {
+        this.qrCode = qrCode;
+      });
+
       print('$qrCode');
       List<dynamic> box = jsonDecode(await request_box_description(box_uuid: qrCode));
       box.forEach((elem) {
         global[elem['type'].toLowerCase() + '_scanned'] = elem;
       });
 
-      setState(() {
-        this.qrCode = qrCode;
-      });
 
       Navigator.of(context).push(MaterialPageRoute(
         builder: (BuildContext context) => KernPage(),
