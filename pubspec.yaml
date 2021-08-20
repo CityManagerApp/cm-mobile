@@ -38,7 +38,7 @@ dependencies:
 
   image_cropper: ^1.2.0
 
-
+  intl: ^0.16.1
 
 
 dev_dependencies:

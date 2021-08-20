@@ -1,0 +1,38 @@
+[
+  {
+    "id": 81,
+    "uuid": "00000001-0001-0001-0001-000000000000",
+    "parent_uuid": "00000001-0001-0001-0000-000000000000",
+    "type": "CONTAINER",
+    "name": "Контейнер 1",
+    "meta": "{\"leaf\": false, \"depth_end\": 1007.0, \"depth_start\": 1000.0, \"storage_json\": {\"row\": 1, \"line\": 1, \"section\": 1, \"label_row\": \"Ряд\", \"label_line\": \"Стелаж\", \"label_section\": \"Секция\", \"number_in_cell\": 1, \"label_number_in_cell\": \"Номер в ячейке\"}, \"tree_visible\": true, \"label_depth_end\": \"Конец интервала\", \"label_depth_start\": \"Начало интервала\", \"in_interval_number\": 1, \"label_in_interval_number\": \"Номер контейнера в интервале\"}",
+    "modified": "2021-08-16 10:19:22.449448+00"
+  },
+  {
+    "id": 80,
+    "uuid": "00000001-0001-0001-0000-000000000000",
+    "parent_uuid": "00000001-0001-0000-0000-000000000000",
+    "type": "INTERVAL",
+    "name": "1000.0-1021.0",
+    "meta": "{\"leaf\": false, \"name\": \"Интервал отбора 1000.0-1021.0\", \"depth_end\": 1021.0, \"label_name\": \"Наименование\", \"depth_start\": 1000.0, \"extract_date\": \"2021.01.01 12:00:00\", \"total_length\": 10, \"tree_visible\": true, \"extract_length\": 9, \"extract_reason\": \"Зачем достали\", \"label_depth_end\": \"Конец интервала\", \"containers_count\": 7, \"label_depth_start\": \"Начало интервала\", \"label_extract_date\": \"Дата отбора\", \"label_total_length\": \"Проходка\", \"label_extract_length\": \"Вынос\", \"label_extract_reason\": \"Цель исследования\", \"kern_extract_equipment\": \"КС/МД-124\", \"label_containers_count\": \"Число контейнеров\", \"label_kern_extract_equipment\": \"Кернснаряд\"}",
+    "modified": "2021-08-16 10:19:22.449448+00"
+  },
+  {
+    "id": 79,
+    "uuid": "00000001-0001-0000-0000-000000000000",
+    "parent_uuid": "00000001-0000-0000-0000-000000000000",
+    "type": "WELL",
+    "name": "Скв 1",
+    "meta": "{\"alt\": \"longitude\", \"lat\": \"latitude\", \"lng\": \"longitude\", \"leaf\": false, \"name\": \"Скважина №1\", \"customer\": \"ПАО ТатНефть\", \"label_alt\": \"Высота над уровнем моря\", \"label_lat\": \"Широта\", \"label_lng\": \"Долгота\", \"label_name\": \"Наименование\", \"description\": \"Самая глубокая\", \"tree_visible\": true, \"drill_company\": \"БурКомпания\", \"well_category\": \"Разведочная\", \"label_customer\": \"Заказчик\", \"measured_depth\": 1500.0, \"label_description\": \"Описание\", \"label_drill_company\": \"Буровая Компания\", \"label_well_category\": \"Категория скважины\", \"label_measured_depth\": \"Глубина\"}",
+    "modified": "2021-08-16 10:19:22.449448+00"
+  },
+  {
+    "id": 78,
+    "uuid": "00000001-0000-0000-0000-000000000000",
+    "parent_uuid": "00000001-0000-0000-0000-000000000000",
+    "type": "FIELD",
+    "name": "Месторождение 1",
+    "meta": "{\"leaf\": false, \"name\": \"Название месторождения\", \"label_name\": \"Наименование\", \"coordinates\": \"тут должны были быть координаты\", \"description\": \"Самое большое и глубокое, открыто за 1000 до н.э.\", \"tree_visible\": true, \"label_coordinates\": \"Координаты\", \"label_description\": \"Описание\"}",
+    "modified": "2021-08-16 10:19:22.449448+00"
+  }
+]

@@ -68,9 +68,10 @@ class _QRScanPageState extends State<QRScanPage> {
 
       setState(() {
         this.qrCode = qrCode;
+        global["container_uuid"] = qrCode;
       });
 
-      List<dynamic> box = jsonDecode(await request_box_description(box_uuid: qrCode));
+      List<dynamic> box = jsonDecode(await getContainerDescription(containerId: qrCode));
       box.forEach((elem) {
         global[elem['type'].toLowerCase() + '_scanned'] = elem;
       });

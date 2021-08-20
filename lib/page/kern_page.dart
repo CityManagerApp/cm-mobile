@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
@@ -29,6 +31,249 @@ class KernPage extends StatefulWidget {
 }
 
 class _KernPage extends State<KernPage> {
+  List<Widget> intervalElements = [];
+  List<String> intervals = [];
+  bool macrosUploaded = false;
+
+  List<double> disassembleInterval(String i) {
+    return [double.parse(i.split('-')[0]), double.parse(i.split('-')[1])];
+  }
+
+  List<String> generateMiddleInterval(String a, String b) {
+    double aStart = disassembleInterval(a)[0];
+    double aEnd = disassembleInterval(a)[1];
+    double bStart = disassembleInterval(b)[0];
+    double bEnd = disassembleInterval(b)[1];
+
+    double mStart, mEnd;
+
+    print('($aStart, $aEnd)');
+    print('($bStart, $bEnd)');
+
+    if (aEnd != bStart) {
+      print('first case');
+      mStart = aEnd;
+      mEnd = bStart;
+    } else {
+      print('second case');
+      double d = (bEnd - aStart).abs() / 3;
+      aEnd = aStart + d;
+      mStart = aEnd;
+      mEnd = mStart + d;
+      bStart = mEnd;
+    }
+
+    print('($aStart, $aEnd)');
+    print('($bStart, $bEnd)');
+
+    return ['$aStart-$aEnd', '$mStart-$mEnd', '$bStart-$bEnd'];
+  }
+
+  addInterval({
+    String where,
+    int id,
+    String interval,
+  }) {
+    if (where == null) where = 'after';
+    if (id == null) id = intervalElements.length - 1;
+
+    intervals.insert(
+      id + (where == 'after' ? 1 : 0),
+      interval,
+    );
+    intervalElements.insert(
+      id + (where == 'after' ? 1 : 0),
+      SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          children: [
+            Row(children: [
+              IconButton(
+                icon: Icon(Icons.arrow_upward_outlined),
+                onPressed: () {
+                  var currentId = intervals.indexOf(interval);
+                  if (currentId == 0) {
+                    print('cur id = 0');
+                    List<double> cur = disassembleInterval(interval);
+                    double curStart = cur[0];
+                    double curEnd = cur[1];
+                    double curMid = (cur[0] + cur[1]) / 2;
+                    String newCurrentInterval = '$curStart-$curMid';
+                    String nextInterval = '$curMid-$curEnd';
+                    setState(() {
+                      intervalElements.removeAt(currentId);
+                      intervals.removeAt(currentId);
+
+                      addInterval(
+                        where: 'before',
+                        id: currentId,
+                        interval: newCurrentInterval,
+                      );
+                      addInterval(
+                        where: 'after',
+                        id: currentId,
+                        interval: nextInterval,
+                      );
+                    });
+                    return;
+                  }
+                  List<String> intervalVicinity = generateMiddleInterval(
+                      intervals[currentId - 1], interval);
+                  String leftInterval = intervalVicinity[0];
+                  String middleInterval = intervalVicinity[1];
+                  String rightInterval = intervalVicinity[2];
+                  setState(() {
+                    intervalElements.removeAt(currentId);
+                    intervals.removeAt(currentId);
+                    intervalElements.removeAt(currentId - 1);
+                    intervals.removeAt(currentId - 1);
+                    addInterval(
+                      where: 'before',
+                      id: currentId - 1,
+                      interval: rightInterval,
+                    );
+                    addInterval(
+                      where: 'before',
+                      id: currentId - 1,
+                      interval: middleInterval,
+                    );
+                    addInterval(
+                      where: 'before',
+                      id: currentId - 1,
+                      interval: leftInterval,
+                    );
+                  });
+                },
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 2,
+                child: TextField(
+                  controller: TextEditingController(
+                    text: intervals[intervals.indexOf(interval)],
+                  ),
+                  decoration: InputDecoration(
+                    // prefixIcon: Icon(Icons.edit_road),
+                    suffixIcon: Column(
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.edit_outlined),
+                          onPressed: () {
+                            print('макро edit');
+                          },
+                        ),
+                      ],
+                    ),
+                    border: OutlineInputBorder(),
+                  ),
+                  keyboardType: TextInputType.number,
+                  textInputAction: TextInputAction.done,
+                ),
+              ),
+              IconButton(
+                icon: Icon(Icons.arrow_downward_outlined),
+                onPressed: () {
+                  var currentId = intervals.indexOf(interval);
+                  if (currentId == intervals.length - 1) {
+                    print('cur id = intervals len');
+                    List<double> cur = disassembleInterval(interval);
+                    double curStart = cur[0];
+                    double curEnd = cur[1];
+                    double curMid = (cur[0] + cur[1]) / 2;
+                    String newCurrentInterval = '$curStart-$curMid';
+                    String nextInterval = '$curMid-$curEnd';
+                    setState(() {
+                      intervalElements.removeAt(currentId);
+                      intervals.removeAt(currentId);
+
+                      addInterval(
+                        where: 'before',
+                        id: currentId,
+                        interval: newCurrentInterval,
+                      );
+                      addInterval(
+                        where: 'after',
+                        id: currentId,
+                        interval: nextInterval,
+                      );
+                    });
+                    return;
+                  }
+                  List<String> intervalVicinity = generateMiddleInterval(
+                      interval, intervals[currentId + 1]);
+                  String leftInterval = intervalVicinity[0];
+                  String middleInterval = intervalVicinity[1];
+                  String rightInterval = intervalVicinity[2];
+                  setState(() {
+                    intervalElements.removeAt(currentId + 1);
+                    intervals.removeAt(currentId + 1);
+                    intervalElements.removeAt(currentId);
+                    intervals.removeAt(currentId);
+                    addInterval(
+                      where: 'before',
+                      id: currentId,
+                      interval: rightInterval,
+                    );
+                    addInterval(
+                      where: 'before',
+                      id: currentId,
+                      interval: middleInterval,
+                    );
+                    addInterval(
+                      where: 'before',
+                      id: currentId,
+                      interval: leftInterval,
+                    );
+                  });
+                },
+              ),
+            ]),
+            SizedBox(
+              height: 8,
+            ),
+          ],
+        ),
+      ),
+    );
+
+    setState(() {});
+  }
+
+  initMacros() async {
+    if (!macrosUploaded) {
+      macrosUploaded = true;
+      List<dynamic> macros = jsonDecode(
+          await getContainerMacros(containerId: global["container_uuid"]));
+      if (macros.isEmpty) {
+        addInterval(
+          interval:
+              '${toJsonObject(global['container_scanned']['meta'])['depth_start']}-'
+              '${toJsonObject(global['container_scanned']['meta'])['depth_end']}',
+        );
+        // addInterval(
+        //   interval: '1007-1015',
+        // );
+        // addInterval(
+        //   interval: '1016-1023',
+        // );
+        return;
+      }
+      // print('macros ${macros[0]}');
+      for (var m in macros) {
+        print('${toJsonObject(m['meta'])['depth_start']}-'
+            '${toJsonObject(m['meta'])['depth_end']}');
+        addInterval(
+            interval: '${toJsonObject(m['meta'])['depth_start']}-'
+                '${toJsonObject(m['meta'])['depth_end']}');
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    initMacros();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     // request_box_intervals(box_uuid: global['box_scanned']['meta']['name']);
@@ -38,6 +283,7 @@ class _KernPage extends State<KernPage> {
 
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomPadding: false,
         appBar: AppBar(
           title: Text(MyApp.title),
         ),
@@ -60,12 +306,14 @@ class _KernPage extends State<KernPage> {
               children: <Widget>[
                 Center(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      SizedBox(height: 16),
                       SizedBox(
-                        width: double.infinity,
-                        height: 128,
+                        height: 8,
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width - 24,
+                        height: MediaQuery.of(context).size.height / 6,
                         child: OutlineButton(
                           onPressed: () =>
                               Navigator.of(context).push(MaterialPageRoute(
@@ -85,37 +333,57 @@ class _KernPage extends State<KernPage> {
                                 color: Colors.blue,
                                 size: 64,
                               ),
-                              SizedBox(height: 8),
-                              Text("Добавить фотографию",
-                                  style: TextStyle(
-                                    color: Colors.blue,
-                                    fontSize: 25,
-                                  )),
                             ],
                           ),
                         ),
                       ),
-                      SizedBox(height: 16),
-                      OutlineButton(
-                        onPressed: () => {print('edit intervals')},
-                        padding: EdgeInsets.all(10.0),
-                        borderSide: BorderSide(color: Colors.blue),
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(6.0)),
-                        ),
-                        child: Column(
-                          // Replace with a Row for horizontal icon + text
-                          children: <Widget>[
-                            Icon(Icons.edit_outlined, color: Colors.blue),
-                            SizedBox(height: 8),
-                            Text("Интервалы",
-                                style: TextStyle(
-                                  color: Colors.blue,
-                                )),
-                          ],
+                      SizedBox(
+                        height: 8,
+                      ),
+                      SizedBox(
+                        height:
+                            MediaQuery.of(context).size.height * 5 / 6 - 100,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              ...intervalElements,
+                              SizedBox(
+                                height: 20,
+                              ),
+                              OutlineButton(
+                                onPressed: () {
+
+                                },
+                                padding: EdgeInsets.all(10.0),
+                                borderSide: BorderSide(color: Colors.blue),
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(6.0)),
+                                ),
+                                child: Row(
+                                  // Replace with a Row for horizontal icon + text
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.upload_outlined,
+                                      color: Colors.blue,
+                                      size: 64,
+                                    ),
+                                    SizedBox(width: 24),
+                                    Text("Сдать макроописания",
+                                        style: TextStyle(
+                                          color: Colors.blue,
+                                          fontSize: 22,
+                                        )),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 64+8.0,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      SizedBox(height: 72),
                     ],
                   ),
                 ),
@@ -202,19 +470,20 @@ class DrawerWidget extends StatelessWidget {
                     ),
                     ListTile(
                       title: Text(
-                        'МЕСТОРОЖДЕНИЕ:\t${toJsonItem(global['field_scanned']['name'])}\n'
-                        'НОМЕР СКВАЖИНЫ:\t${toJsonItem(global['well_scanned']['name'])}\n'
-                        'ОБЩИЙ ИНТЕРВАЛ:\t${toJsonObject(global['interval_scanned']['meta'])['depth_start']}-${toJsonObject(global['interval_scanned']['meta'])['depth_end']}\n'
-                        'ИНТЕРВАЛ ОТБОРА:\t${toJsonObject(global['container_scanned']['meta'])['depth_start']}-${toJsonObject(global['container_scanned']['meta'])['depth_end']}\n'
-                        '${toJsonObject(global['container_scanned']['meta'])['storage_json']['label_line']}:\t${toJsonObject(global['container_scanned']['meta'])['storage_json']['line']}\n'
-                        '${toJsonObject(global['container_scanned']['meta'])['storage_json']['label_section']}:\t${toJsonObject(global['container_scanned']['meta'])['storage_json']['section']}\n'
-                        '${toJsonObject(global['container_scanned']['meta'])['storage_json']['label_row']}:\t${toJsonObject(global['container_scanned']['meta'])['storage_json']['row']}\n'
-                        '${toJsonObject(global['container_scanned']['meta'])['label_in_interval_number']}:\t${toJsonObject(global['container_scanned']['meta'])['in_interval_number']}\n'
-                        '${toJsonObject(global['interval_scanned']['meta'])['label_total_length']}:\t${toJsonObject(global['interval_scanned']['meta'])['total_length']}\n'
-                        '${toJsonObject(global['interval_scanned']['meta'])['label_extract_length']}:\t${toJsonObject(global['interval_scanned']['meta'])['extract_length']}\n'
-                        '${toJsonObject(global['interval_scanned']['meta'])['label_extract_reason']}:\t${toJsonObject(global['interval_scanned']['meta'])['extract_reason']}\n'
-                        '${toJsonObject(global['interval_scanned']['meta'])['label_kern_extract_equipment']}:\t${toJsonObject(global['interval_scanned']['meta'])['kern_extract_equipment']}\n'
-                        '${toJsonObject(global['interval_scanned']['meta'])['label_containers_count']}:\t${toJsonObject(global['interval_scanned']['meta'])['containers_count']}\n',
+                        // 'МЕСТОРОЖДЕНИЕ:\t${toJsonItem(global['field_scanned']['name'])}\n'
+                        // 'НОМЕР СКВАЖИНЫ:\t${toJsonItem(global['well_scanned']['name'])}\n'
+                        // 'ОБЩИЙ ИНТЕРВАЛ:\t${toJsonObject(global['interval_scanned']['meta'])['depth_start']}-${toJsonObject(global['interval_scanned']['meta'])['depth_end']}\n'
+                        // 'ИНТЕРВАЛ ОТБОРА:\t${toJsonObject(global['container_scanned']['meta'])['depth_start']}-${toJsonObject(global['container_scanned']['meta'])['depth_end']}\n'
+                        // '${toJsonObject(global['container_scanned']['meta'])['storage_json']['label_line']}:\t${toJsonObject(global['container_scanned']['meta'])['storage_json']['line']}\n'
+                        // '${toJsonObject(global['container_scanned']['meta'])['storage_json']['label_section']}:\t${toJsonObject(global['container_scanned']['meta'])['storage_json']['section']}\n'
+                        // '${toJsonObject(global['container_scanned']['meta'])['storage_json']['label_row']}:\t${toJsonObject(global['container_scanned']['meta'])['storage_json']['row']}\n'
+                        // '${toJsonObject(global['container_scanned']['meta'])['label_in_interval_number']}:\t${toJsonObject(global['container_scanned']['meta'])['in_interval_number']}\n'
+                        // '${toJsonObject(global['interval_scanned']['meta'])['label_total_length']}:\t${toJsonObject(global['interval_scanned']['meta'])['total_length']}\n'
+                        // '${toJsonObject(global['interval_scanned']['meta'])['label_extract_length']}:\t${toJsonObject(global['interval_scanned']['meta'])['extract_length']}\n'
+                        // '${toJsonObject(global['interval_scanned']['meta'])['label_extract_reason']}:\t${toJsonObject(global['interval_scanned']['meta'])['extract_reason']}\n'
+                        // '${toJsonObject(global['interval_scanned']['meta'])['label_kern_extract_equipment']}:\t${toJsonObject(global['interval_scanned']['meta'])['kern_extract_equipment']}\n'
+                        // '${toJsonObject(global['interval_scanned']['meta'])['label_containers_count']}:\t${toJsonObject(global['interval_scanned']['meta'])['containers_count']}\n',
+                        '',
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.white,
