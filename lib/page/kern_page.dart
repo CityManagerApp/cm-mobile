@@ -13,6 +13,7 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'package:clik/network.dart';
 
+import 'add_macroinfo_text.dart';
 import 'add_photos_page.dart';
 
 toJsonItem(String s) {
@@ -158,7 +159,13 @@ class _KernPage extends State<KernPage> {
                         IconButton(
                           icon: Icon(Icons.edit_outlined),
                           onPressed: () {
-                            print('макро edit');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    AddMacroinfoText(currentInterval: interval),
+                              ),
+                            );
                           },
                         ),
                       ],
@@ -354,13 +361,28 @@ class _KernPage extends State<KernPage> {
                                 onPressed: () {
                                   for (String i in intervals) {
                                     uploadMacro(
-                                        macroInfo: <String, String>{
-                                          'interval': i,
-                                          'text_description': 'пока пусто',
-                                        },
-                                        containerId: global["container_uuid"],
+                                      macroInfo: <String, String>{
+                                        'interval': i,
+                                        'text_description': global.containsKey(
+                                                "macroinfo_text_description:$i")
+                                            ? global[
+                                                "macroinfo_text_description:$i"]
+                                            : 'Было сдано пустое описание.',
+                                      },
+                                      containerId: global["container_uuid"],
                                     );
                                   }
+
+                                  final snackBar = SnackBar(
+                                    content: const Text('Данные отправлены!'),
+                                    action: SnackBarAction(
+                                      label: 'Undo',
+                                      onPressed: () {
+                                        // Some code to undo the change.
+                                      },
+                                    ),
+                                  );
+                                  Scaffold.of(context).showSnackBar(snackBar);
                                 },
                                 padding: EdgeInsets.all(10.0),
                                 borderSide: BorderSide(color: Colors.blue),
@@ -386,7 +408,7 @@ class _KernPage extends State<KernPage> {
                                 ),
                               ),
                               SizedBox(
-                                height: 64+8.0,
+                                height: 64 + 8.0,
                               ),
                             ],
                           ),
