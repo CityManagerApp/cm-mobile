@@ -352,7 +352,15 @@ class _KernPage extends State<KernPage> {
                               ),
                               OutlineButton(
                                 onPressed: () {
-
+                                  for (String i in intervals) {
+                                    uploadMacro(
+                                        macroInfo: <String, String>{
+                                          'interval': i,
+                                          'text_description': 'пока пусто',
+                                        },
+                                        containerId: global["container_uuid"],
+                                    );
+                                  }
                                 },
                                 padding: EdgeInsets.all(10.0),
                                 borderSide: BorderSide(color: Colors.blue),
