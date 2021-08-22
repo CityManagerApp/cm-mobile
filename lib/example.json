@@ -1,38 +1,38 @@
 [
   {
-    "id": 81,
-    "uuid": "00000001-0001-0001-0001-000000000000",
-    "parent_uuid": "00000001-0001-0001-0000-000000000000",
+    "id": 109,
+    "uuid": "00000002-0001-0001-0001-000000000000",
+    "parent_uuid": "00000002-0001-0001-0000-000000000000",
     "type": "CONTAINER",
-    "name": "Контейнер 1",
-    "meta": "{\"leaf\": false, \"depth_end\": 1007.0, \"depth_start\": 1000.0, \"storage_json\": {\"row\": 1, \"line\": 1, \"section\": 1, \"label_row\": \"Ряд\", \"label_line\": \"Стелаж\", \"label_section\": \"Секция\", \"number_in_cell\": 1, \"label_number_in_cell\": \"Номер в ячейке\"}, \"tree_visible\": true, \"label_depth_end\": \"Конец интервала\", \"label_depth_start\": \"Начало интервала\", \"in_interval_number\": 1, \"label_in_interval_number\": \"Номер контейнера в интервале\"}",
-    "modified": "2021-08-16 10:19:22.449448+00"
+    "name": "1000.0-1003.0",
+    "meta": "{\"row\": 1, \"leaf\": false, \"line\": 1, \"name\": \"1000.0-1003.0\", \"section\": 1, \"depth_end\": 1003.0, \"label_row\": {\"label\": \"Ряд\", \"priority\": 4, \"single_row\": false}, \"label_line\": {\"label\": \"Стелаж\", \"priority\": 4, \"single_row\": false}, \"label_name\": {\"label\": \"Контейнер\", \"priority\": 0, \"single_row\": true}, \"depth_start\": 1000.0, \"tree_visible\": true, \"label_section\": {\"label\": \"Секция\", \"priority\": 4, \"single_row\": false}, \"dashboard_meta\": {\"section0\": {\"type\": \"FIELD\", \"meta_fields\": [\"name\"]}, \"section1\": {\"type\": \"WELL\", \"meta_fields\": [\"name\"]}, \"section2\": {\"type\": \"INTERVAL\", \"meta_fields\": [\"extract_reason\", \"kern_extract_equipment\"]}, \"section3\": {\"type\": \"INTERVAL\", \"meta_fields\": [\"extract_date\", \"arrival_date\"]}}, \"number_in_cell\": 1, \"storage_number\": 1, \"label_depth_end\": {\"label\": \"Конец интервала\", \"priority\": 1, \"single_row\": false}, \"container_number\": \"№4242\", \"label_depth_start\": {\"label\": \"Начало интервала\", \"priority\": 1, \"single_row\": false}, \"in_interval_number\": 1, \"label_number_in_cell\": {\"label\": \"Номер в ячейке\", \"priority\": 4, \"single_row\": false}, \"label_storage_number\": {\"label\": \"Кернохранилище\", \"priority\": 2, \"single_row\": false}, \"label_container_number\": {\"label\": \"Табельный номер\", \"priority\": 2, \"single_row\": false}, \"label_in_interval_number\": {\"label\": \"Номер контейнера в интервале\", \"priority\": 3, \"single_row\": false}}",
+    "modified": "2021-08-21 14:27:06.612462+00"
   },
   {
-    "id": 80,
-    "uuid": "00000001-0001-0001-0000-000000000000",
-    "parent_uuid": "00000001-0001-0000-0000-000000000000",
+    "id": 108,
+    "uuid": "00000002-0001-0001-0000-000000000000",
+    "parent_uuid": "00000002-0001-0000-0000-000000000000",
     "type": "INTERVAL",
-    "name": "1000.0-1021.0",
-    "meta": "{\"leaf\": false, \"name\": \"Интервал отбора 1000.0-1021.0\", \"depth_end\": 1021.0, \"label_name\": \"Наименование\", \"depth_start\": 1000.0, \"extract_date\": \"2021.01.01 12:00:00\", \"total_length\": 10, \"tree_visible\": true, \"extract_length\": 9, \"extract_reason\": \"Зачем достали\", \"label_depth_end\": \"Конец интервала\", \"containers_count\": 7, \"label_depth_start\": \"Начало интервала\", \"label_extract_date\": \"Дата отбора\", \"label_total_length\": \"Проходка\", \"label_extract_length\": \"Вынос\", \"label_extract_reason\": \"Цель исследования\", \"kern_extract_equipment\": \"КС/МД-124\", \"label_containers_count\": \"Число контейнеров\", \"label_kern_extract_equipment\": \"Кернснаряд\"}",
-    "modified": "2021-08-16 10:19:22.449448+00"
+    "name": "1000.0-1011.0",
+    "meta": "{\"leaf\": false, \"name\": \"1000.0-1011.0\", \"depth_end\": 1011, \"label_name\": {\"label\": \"Интервал\", \"priority\": 0, \"single_row\": true}, \"depth_start\": 1000, \"arrival_date\": \"2021.01.01 15:00:00\", \"extract_date\": \"2021.01.01 12:00:00\", \"total_length\": 11, \"tree_visible\": true, \"dashboard_meta\": {\"section0\": {\"type\": \"FIELD\", \"meta_fields\": [\"name\"]}, \"section1\": {\"type\": \"WELL\", \"meta_fields\": [\"name\"]}}, \"extract_length\": 9.5, \"extract_reason\": \"Зачем достали\", \"label_depth_end\": {\"label\": \"Конец интервала\", \"priority\": 1, \"single_row\": false}, \"containers_count\": 1, \"label_depth_start\": {\"label\": \"Начало интервала\", \"priority\": 1, \"single_row\": false}, \"label_arrival_date\": {\"label\": \"Дата поступления\", \"priority\": 5, \"single_row\": false}, \"label_extract_date\": {\"label\": \"Дата отбора\", \"priority\": 5, \"single_row\": false}, \"label_total_length\": {\"label\": \"Проходка\", \"priority\": 2, \"single_row\": false}, \"label_extract_length\": {\"label\": \"Вынос\", \"priority\": 2, \"single_row\": false}, \"label_extract_reason\": {\"label\": \"Цель исследования\", \"priority\": 4, \"single_row\": false}, \"kern_extract_equipment\": \"КС/МД-124\", \"label_containers_count\": {\"label\": \"Число контейнеров\", \"priority\": 3, \"single_row\": false}, \"label_kern_extract_equipment\": {\"label\": \"Кернснаряд\", \"priority\": 4, \"single_row\": false}}",
+    "modified": "2021-08-21 14:26:25.710459+00"
   },
   {
-    "id": 79,
-    "uuid": "00000001-0001-0000-0000-000000000000",
-    "parent_uuid": "00000001-0000-0000-0000-000000000000",
+    "id": 107,
+    "uuid": "00000002-0001-0000-0000-000000000000",
+    "parent_uuid": "00000002-0000-0000-0000-000000000000",
     "type": "WELL",
-    "name": "Скв 1",
-    "meta": "{\"alt\": \"longitude\", \"lat\": \"latitude\", \"lng\": \"longitude\", \"leaf\": false, \"name\": \"Скважина №1\", \"customer\": \"ПАО ТатНефть\", \"label_alt\": \"Высота над уровнем моря\", \"label_lat\": \"Широта\", \"label_lng\": \"Долгота\", \"label_name\": \"Наименование\", \"description\": \"Самая глубокая\", \"tree_visible\": true, \"drill_company\": \"БурКомпания\", \"well_category\": \"Разведочная\", \"label_customer\": \"Заказчик\", \"measured_depth\": 1500.0, \"label_description\": \"Описание\", \"label_drill_company\": \"Буровая Компания\", \"label_well_category\": \"Категория скважины\", \"label_measured_depth\": \"Глубина\"}",
-    "modified": "2021-08-16 10:19:22.449448+00"
+    "name": "32645",
+    "meta": "{\"alt\": \"altitude\", \"lat\": \"latitude\", \"lng\": \"longitude\", \"leaf\": false, \"name\": \"32645\", \"customer\": \"ПАО ТатНефть\", \"label_alt\": {\"label\": \"Высота над уровнем моря\", \"priority\": 1, \"single_row\": false}, \"label_lat\": {\"label\": \"Широта\", \"priority\": 1, \"single_row\": false}, \"label_lng\": {\"label\": \"Долгота\", \"priority\": 1, \"single_row\": false}, \"label_name\": {\"label\": \"Скважина\", \"priority\": 0, \"single_row\": true}, \"description\": \"Самая глубокая\", \"tree_visible\": true, \"drill_company\": \"БурКомпания\", \"well_category\": \"Разведочная\", \"dashboard_meta\": {\"section0\": {\"type\": \"FIELD\", \"meta_fields\": [\"name\"]}}, \"label_customer\": {\"label\": \"Заказчик\", \"priority\": 3, \"single_row\": false}, \"measured_depth\": 1500, \"label_description\": {\"label\": \"Описание\", \"priority\": 4, \"single_row\": true}, \"label_drill_company\": {\"label\": \"Буровая Компания\", \"priority\": 3, \"single_row\": false}, \"label_well_category\": {\"label\": \"Категория скважины\", \"priority\": 2, \"single_row\": false}, \"label_measured_depth\": {\"label\": \"Глубина\", \"priority\": 2, \"single_row\": false}}",
+    "modified": "2021-08-20 12:27:04.874827+00"
   },
   {
-    "id": 78,
-    "uuid": "00000001-0000-0000-0000-000000000000",
-    "parent_uuid": "00000001-0000-0000-0000-000000000000",
+    "id": 106,
+    "uuid": "00000002-0000-0000-0000-000000000000",
+    "parent_uuid": "00000000-0000-0000-0000-000000000000",
     "type": "FIELD",
-    "name": "Месторождение 1",
-    "meta": "{\"leaf\": false, \"name\": \"Название месторождения\", \"label_name\": \"Наименование\", \"coordinates\": \"тут должны были быть координаты\", \"description\": \"Самое большое и глубокое, открыто за 1000 до н.э.\", \"tree_visible\": true, \"label_coordinates\": \"Координаты\", \"label_description\": \"Описание\"}",
-    "modified": "2021-08-16 10:19:22.449448+00"
+    "name": "Ромашкинское",
+    "meta": "{\"leaf\": false, \"name\": \"Ромашкинское\", \"label_name\": {\"label\": \"Месторождение\", \"priority\": 1, \"single_row\": true}, \"coordinates\": \"54°34′22 с. ш. 52°22′14 в.д.\", \"description\": \"Ромашкинское нефтяное месторождение — крупнейшее месторождение России Волго-Уральской провинции. Находится на юго-востоке Татарстана, в 20 км от г. Бугульма. Открыто в 1948 году в Бугульминском районе ТАССР. Открытие месторождения дало начало масштабному строительству первого посёлка нефтяников, названного жителями Зеленогорском, который позднее, 18 августа 1955 года, с присвоением статуса города был переименован в Лениногорск.\", \"tree_visible\": true, \"label_coordinates\": {\"label\": \"Координаты\", \"priority\": 2, \"single_row\": true}, \"label_description\": {\"label\": \"Описание\", \"priority\": 3, \"single_row\": true}}",
+    "modified": "2021-08-22 14:28:49.296081+00"
   }
 ]

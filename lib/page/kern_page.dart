@@ -489,20 +489,24 @@ class DrawerWidget extends StatelessWidget {
                     ),
                     ListTile(
                       title: Text(
-                        // 'МЕСТОРОЖДЕНИЕ:\t${toJsonItem(global['field_scanned']['name'])}\n'
-                        // 'НОМЕР СКВАЖИНЫ:\t${toJsonItem(global['well_scanned']['name'])}\n'
-                        // 'ОБЩИЙ ИНТЕРВАЛ:\t${toJsonObject(global['interval_scanned']['meta'])['depth_start']}-${toJsonObject(global['interval_scanned']['meta'])['depth_end']}\n'
-                        // 'ИНТЕРВАЛ ОТБОРА:\t${toJsonObject(global['container_scanned']['meta'])['depth_start']}-${toJsonObject(global['container_scanned']['meta'])['depth_end']}\n'
-                        // '${toJsonObject(global['container_scanned']['meta'])['storage_json']['label_line']}:\t${toJsonObject(global['container_scanned']['meta'])['storage_json']['line']}\n'
-                        // '${toJsonObject(global['container_scanned']['meta'])['storage_json']['label_section']}:\t${toJsonObject(global['container_scanned']['meta'])['storage_json']['section']}\n'
-                        // '${toJsonObject(global['container_scanned']['meta'])['storage_json']['label_row']}:\t${toJsonObject(global['container_scanned']['meta'])['storage_json']['row']}\n'
-                        // '${toJsonObject(global['container_scanned']['meta'])['label_in_interval_number']}:\t${toJsonObject(global['container_scanned']['meta'])['in_interval_number']}\n'
-                        // '${toJsonObject(global['interval_scanned']['meta'])['label_total_length']}:\t${toJsonObject(global['interval_scanned']['meta'])['total_length']}\n'
-                        // '${toJsonObject(global['interval_scanned']['meta'])['label_extract_length']}:\t${toJsonObject(global['interval_scanned']['meta'])['extract_length']}\n'
-                        // '${toJsonObject(global['interval_scanned']['meta'])['label_extract_reason']}:\t${toJsonObject(global['interval_scanned']['meta'])['extract_reason']}\n'
-                        // '${toJsonObject(global['interval_scanned']['meta'])['label_kern_extract_equipment']}:\t${toJsonObject(global['interval_scanned']['meta'])['kern_extract_equipment']}\n'
-                        // '${toJsonObject(global['interval_scanned']['meta'])['label_containers_count']}:\t${toJsonObject(global['interval_scanned']['meta'])['containers_count']}\n',
-                        '',
+                        '${toJsonObject(global['field_scanned']['meta'])['label_name']['label']}:\t${toJsonObject(global['field_scanned']['meta'])['name']}\n'
+                        '${toJsonObject(global['well_scanned']['meta'])['label_name']['label']}:\t${toJsonObject(global['well_scanned']['meta'])['name']}\n'
+                        '${toJsonObject(global['well_scanned']['meta'])['label_customer']['label']}:\t${toJsonObject(global['well_scanned']['meta'])['customer']}\n'
+                        '${toJsonObject(global['interval_scanned']['meta'])['label_name']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['depth_start']}-${toJsonObject(global['interval_scanned']['meta'])['depth_end']}\n'
+                        'Интервал отбора:\t${toJsonObject(global['container_scanned']['meta'])['depth_start']}-${toJsonObject(global['container_scanned']['meta'])['depth_end']}\n'
+                        '${toJsonObject(global['container_scanned']['meta'])['label_storage_number']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['storage_number']}\n'
+                        '${toJsonObject(global['container_scanned']['meta'])['label_line']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['line']}\n'
+                        '${toJsonObject(global['container_scanned']['meta'])['label_section']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['section']}\n'
+                        '${toJsonObject(global['container_scanned']['meta'])['label_row']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['row']}\n'
+                        '${toJsonObject(global['container_scanned']['meta'])['label_in_interval_number']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['in_interval_number']}\n'
+                        '${toJsonObject(global['container_scanned']['meta'])['label_container_number']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['container_number']}\n'
+                        '${toJsonObject(global['interval_scanned']['meta'])['label_total_length']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['total_length']}\n'
+                        '${toJsonObject(global['interval_scanned']['meta'])['label_extract_length']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['extract_length']}\n'
+                        '${toJsonObject(global['interval_scanned']['meta'])['label_extract_reason']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['extract_reason']}\n'
+                        '${toJsonObject(global['interval_scanned']['meta'])['label_kern_extract_equipment']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['kern_extract_equipment']}\n'
+                        '${toJsonObject(global['interval_scanned']['meta'])['label_containers_count']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['containers_count']}\n'
+                        '${toJsonObject(global['interval_scanned']['meta'])['label_extract_date']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['extract_date']}\n'
+                        '${toJsonObject(global['interval_scanned']['meta'])['label_arrival_date']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['arrival_date']}\n',
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.white,
