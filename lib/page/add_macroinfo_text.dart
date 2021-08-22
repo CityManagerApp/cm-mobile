@@ -28,37 +28,39 @@ class _AddMacroinfoText extends State<AddMacroinfoText> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        title: Text(MyApp.title),
+        title: Text('${MyApp.title} / ${widget.currentInterval}'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            TextField(
-              controller: TextEditingController(
-                text: widget.currentInterval,
+            Text(
+              'Введите макроописание (сохранение текста выполняется автоматически):',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 18,
               ),
-              onChanged: (text) {
-                global["macroinfo_text_description:${widget.currentInterval}"] =
-                    text;
-              },
-              decoration: InputDecoration(
-                // prefixIcon: Icon(Icons.edit_road),
-                suffixIcon: Column(
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.edit_outlined),
-                      onPressed: () {
-                        print('макро edit');
-                      },
-                    ),
-                  ],
+            ),
+            SizedBox(
+              height: 18,
+            ),
+            SingleChildScrollView(
+              child: TextField(
+                controller: TextEditingController(
+                  text: 'Пустое описание.',
                 ),
-                border: OutlineInputBorder(),
+                onChanged: (text) {
+                  global["macroinfo_text_description:${widget.currentInterval}"] =
+                      text;
+                },
+                decoration: InputDecoration.collapsed(hintText: 'Ожидается описание интервала.'),
+                keyboardType: TextInputType.multiline,
+                maxLines: 20,
+                autofocus: true,
+                textInputAction: TextInputAction.none,
               ),
-              keyboardType: TextInputType.text,
-              textInputAction: TextInputAction.none,
             ),
           ],
         ),

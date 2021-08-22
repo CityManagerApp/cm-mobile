@@ -372,17 +372,6 @@ class _KernPage extends State<KernPage> {
                                       containerId: global["container_uuid"],
                                     );
                                   }
-
-                                  final snackBar = SnackBar(
-                                    content: const Text('Данные отправлены!'),
-                                    action: SnackBarAction(
-                                      label: 'Undo',
-                                      onPressed: () {
-                                        // Some code to undo the change.
-                                      },
-                                    ),
-                                  );
-                                  Scaffold.of(context).showSnackBar(snackBar);
                                 },
                                 padding: EdgeInsets.all(10.0),
                                 borderSide: BorderSide(color: Colors.blue),
