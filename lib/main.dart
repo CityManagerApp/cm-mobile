@@ -16,7 +16,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  static final String title = 'ЦЛИК (v0.9)';
+  static final String title = 'ЦЛИК (v1.0)';
 
   @override
   Widget build(BuildContext context) => MaterialApp(

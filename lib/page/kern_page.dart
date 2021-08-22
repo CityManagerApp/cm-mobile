@@ -251,26 +251,24 @@ class _KernPage extends State<KernPage> {
       List<dynamic> macros = jsonDecode(
           await getContainerMacros(containerId: global["container_uuid"]));
       if (macros.isEmpty) {
+        String interval =
+            '${toJsonObject(global['container_scanned']['meta'])['depth_start']}-'
+            '${toJsonObject(global['container_scanned']['meta'])['depth_end']}';
         addInterval(
-          interval:
-              '${toJsonObject(global['container_scanned']['meta'])['depth_start']}-'
-              '${toJsonObject(global['container_scanned']['meta'])['depth_end']}',
+          interval: interval,
         );
-        // addInterval(
-        //   interval: '1007-1015',
-        // );
-        // addInterval(
-        //   interval: '1016-1023',
-        // );
         return;
       }
       // print('macros ${macros[0]}');
       for (var m in macros) {
-        print('${toJsonObject(m['meta'])['depth_start']}-'
-            '${toJsonObject(m['meta'])['depth_end']}');
+        String interval = '${toJsonObject(m['meta'])['depth_start']}-'
+            '${toJsonObject(m['meta'])['depth_end']}';
+        print('init macro $interval');
         addInterval(
-            interval: '${toJsonObject(m['meta'])['depth_start']}-'
-                '${toJsonObject(m['meta'])['depth_end']}');
+          interval: interval,
+        );
+        global["macroinfo_text_description:$interval"] =
+            toJsonObject(m['meta'])['description'];
       }
     }
   }

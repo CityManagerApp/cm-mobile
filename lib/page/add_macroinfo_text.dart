@@ -49,13 +49,18 @@ class _AddMacroinfoText extends State<AddMacroinfoText> {
             SingleChildScrollView(
               child: TextField(
                 controller: TextEditingController(
-                  text: 'Пустое описание.',
+                  text: global.containsKey(
+                          "macroinfo_text_description:${widget.currentInterval}")
+                      ? global[
+                          "macroinfo_text_description:${widget.currentInterval}"]
+                      : 'Пустое описание.',
                 ),
                 onChanged: (text) {
                   global["macroinfo_text_description:${widget.currentInterval}"] =
                       text;
                 },
-                decoration: InputDecoration.collapsed(hintText: 'Ожидается описание интервала.'),
+                decoration: InputDecoration.collapsed(
+                    hintText: 'Ожидается описание интервала.'),
                 keyboardType: TextInputType.multiline,
                 maxLines: 20,
                 autofocus: true,
