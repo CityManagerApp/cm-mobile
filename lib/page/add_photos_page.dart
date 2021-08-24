@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:clik/widget/button_widget.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_cropper/image_cropper.dart';
 
 import '../main.dart';
@@ -101,7 +102,11 @@ class _AddPhotosPage extends State<AddPhotosPage> {
                 OutlineButton(
                   onPressed: () {
                     print('Сфоткать');
-                    getImage(ImageSource.camera);
+                    getImage(ImageSource.camera).then((completion) {
+                      Fluttertoast.showToast(
+                        msg: 'Фотка отправлена!',
+                      );
+                    });
                   },
                   padding: EdgeInsets.all(10.0),
                   borderSide: BorderSide(color: Colors.blue),

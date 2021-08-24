@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:clik/widget/button_widget.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../main.dart';
 import 'package:http/http.dart' as http;
@@ -153,7 +154,6 @@ class _KernPage extends State<KernPage> {
                     text: intervals[intervals.indexOf(interval)],
                   ),
                   decoration: InputDecoration(
-                    // prefixIcon: Icon(Icons.edit_road),
                     suffixIcon: Column(
                       children: [
                         IconButton(
@@ -165,7 +165,11 @@ class _KernPage extends State<KernPage> {
                                 builder: (context) =>
                                     AddMacroinfoText(currentInterval: interval),
                               ),
-                            );
+                            ).then((completion) {
+                              Fluttertoast.showToast(
+                                msg: 'Макроописание сохранено!',
+                              );
+                            });
                           },
                         ),
                       ],
@@ -291,6 +295,7 @@ class _KernPage extends State<KernPage> {
         resizeToAvoidBottomPadding: false,
         appBar: AppBar(
           title: Text(MyApp.title),
+          toolbarHeight: 48,
         ),
         body: GestureDetector(
           onPanEnd: (d) {
@@ -320,10 +325,12 @@ class _KernPage extends State<KernPage> {
                         width: MediaQuery.of(context).size.width - 24,
                         height: MediaQuery.of(context).size.height / 6,
                         child: OutlineButton(
-                          onPressed: () =>
-                              Navigator.of(context).push(MaterialPageRoute(
-                            builder: (BuildContext context) => AddPhotosPage(),
-                          )),
+                          onPressed: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  AddPhotosPage(),
+                            ),
+                          ),
                           padding: EdgeInsets.all(10.0),
                           borderSide: BorderSide(color: Colors.blue),
                           shape: const RoundedRectangleBorder(
@@ -370,6 +377,8 @@ class _KernPage extends State<KernPage> {
                                       containerId: global["container_uuid"],
                                     );
                                   }
+
+                                  Fluttertoast.showToast(msg: 'Отправлено!');
                                 },
                                 padding: EdgeInsets.all(10.0),
                                 borderSide: BorderSide(color: Colors.blue),

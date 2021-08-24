@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:clik/page/qr_scan_page.dart';
 import 'package:clik/widget/button_widget.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 var global = new Map<String, dynamic>(); // for all global vars
 
@@ -16,18 +17,20 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  static final String title = 'ЦЛИК (v1.0)';
+  static final String title = 'ЦЛИК (v1.1)';
 
   @override
-  Widget build(BuildContext context) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: title,
-        theme: ThemeData(
-          primaryColor: Colors.blue,
-          scaffoldBackgroundColor: Colors.white,
-        ),
-        home: MainPage(title: title),
-      );
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: title,
+      theme: ThemeData(
+        primaryColor: Colors.blue,
+        scaffoldBackgroundColor: Color(0x000000),
+      ),
+      home: MainPage(title: title),
+    );
+  }
 }
 
 class MainPage extends StatefulWidget {
@@ -50,6 +53,7 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        toolbarHeight: 48,
       ),
       body: Center(
         child: Column(
@@ -57,9 +61,11 @@ class _MainPageState extends State<MainPage> {
           children: [
             ButtonWidget(
               text: 'Начать',
-              onClicked: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext context) => QRScanPage(),
-              )),
+              onClicked: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => QRScanPage(),
+                ));
+              },
             ),
           ],
         ),

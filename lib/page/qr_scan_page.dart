@@ -23,6 +23,7 @@ class _QRScanPageState extends State<QRScanPage> {
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: Text(MyApp.title),
+          toolbarHeight: 48,
         ),
         body: Center(
           child: Column(
@@ -75,7 +76,6 @@ class _QRScanPageState extends State<QRScanPage> {
       box.forEach((elem) {
         global[elem['type'].toLowerCase() + '_scanned'] = elem;
       });
-
 
       Navigator.of(context).push(MaterialPageRoute(
         builder: (BuildContext context) => KernPage(),
