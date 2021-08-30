@@ -7,6 +7,8 @@ import 'dart:io';
 
 import 'package:intl/intl.dart';
 
+import 'main.dart';
+
 Timer setTimeout(callback, [int duration = 1000]) {
   return Timer(Duration(milliseconds: duration), callback);
 }
@@ -92,8 +94,16 @@ Future<String> uploadMacro({
   var formatter = new DateFormat('yyyy.MM.dd hh:mm:ss');
   String formattedDate = formatter.format(now);
   print('upload macro accessed ${macroInfo['interval']}, $containerId');
+  String uploadMode = 'postitem';
+  // если спуллено на ините то делаем только апдейт (уже создано)
+  if (global.containsKey("pulled_intervals")) {
+    if (global["pulled_intervals"].contains(macroInfo['interval'])) {
+      uploadMode = 'updateitem';
+    }
+  }
+  // сам запрос
   final http.Response response = await http.post(
-    'https://webuser:webuser@kernlab.devogip.ru/api/v1/postitem',
+    'https://webuser:webuser@kernlab.devogip.ru/api/v1/$uploadMode}',
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8; Accept-Language=ru-RU',
     },
@@ -112,4 +122,12 @@ Future<String> uploadMacro({
         '"label_description":{"label":"Описание"}},"data":{}}',
     encoding: Encoding.getByName("utf-8"),
   );
+  // если отправили новый то в дальнейшем нужно будет апдейтать только
+  if (uploadMode == 'postitem') {
+    if (global.containsKey("pulled_intervals")) {
+      global["pulled_intervals"].add(macroInfo['interval']);
+    } else {
+      global["pulled_intervals"] = [macroInfo['interval']];
+    }
+  }
 }
