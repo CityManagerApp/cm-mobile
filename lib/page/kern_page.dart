@@ -267,6 +267,11 @@ class _KernPage extends State<KernPage> {
       for (var m in macros) {
         String interval = '${toJsonObject(m['meta'])['depth_start']}-'
             '${toJsonObject(m['meta'])['depth_end']}';
+        if (global.containsKey("pulled_intervals")) {
+          global["pulled_intervals"].add(interval);
+        } else {
+          global["pulled_intervals"] = [interval];
+        }
         print('init macro $interval');
         addInterval(
           interval: interval,
