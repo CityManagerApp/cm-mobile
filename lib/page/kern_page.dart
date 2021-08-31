@@ -89,17 +89,55 @@ class _KernPage extends State<KernPage> {
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: [
-            Row(children: [
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  child: TextField(
+                    controller: TextEditingController(
+                      text: intervals[intervals.indexOf(interval)],
+                    ),
+                    decoration: InputDecoration(
+                      suffixIcon: Column(
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.menu),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => AddMacroinfoText(
+                                      currentInterval: interval),
+                                ),
+                              ).then((completion) {
+                                Fluttertoast.showToast(
+                                  msg: 'Макроописание сохранено!',
+                                );
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                      border: OutlineInputBorder(),
+                    ),
+                    keyboardType: TextInputType.number,
+                    textInputAction: TextInputAction.done,
+                  ),
+                ),
+              ),
               IconButton(
-                icon: Icon(Icons.arrow_upward_outlined),
+                icon: Icon(
+                  Icons.keyboard_arrow_up,
+                ),
                 onPressed: () {
                   var currentId = intervals.indexOf(interval);
                   if (currentId == 0) {
                     print('cur id = 0');
                     List<double> cur = disassembleInterval(interval);
-                    double curStart = cur[0];
-                    double curEnd = cur[1];
-                    double curMid = (cur[0] + cur[1]) / 2;
+                    String curStart = (cur[0]).toStringAsFixed(2);
+                    String curEnd = (cur[1]).toStringAsFixed(2);
+                    String curMid = ((cur[0] + cur[1]) / 2).toStringAsFixed(2);
                     String newCurrentInterval = '$curStart-$curMid';
                     String nextInterval = '$curMid-$curEnd';
                     setState(() {
@@ -147,49 +185,18 @@ class _KernPage extends State<KernPage> {
                   });
                 },
               ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width / 2,
-                child: TextField(
-                  controller: TextEditingController(
-                    text: intervals[intervals.indexOf(interval)],
-                  ),
-                  decoration: InputDecoration(
-                    suffixIcon: Column(
-                      children: [
-                        IconButton(
-                          icon: Icon(Icons.edit_outlined),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    AddMacroinfoText(currentInterval: interval),
-                              ),
-                            ).then((completion) {
-                              Fluttertoast.showToast(
-                                msg: 'Макроописание сохранено!',
-                              );
-                            });
-                          },
-                        ),
-                      ],
-                    ),
-                    border: OutlineInputBorder(),
-                  ),
-                  keyboardType: TextInputType.number,
-                  textInputAction: TextInputAction.done,
-                ),
-              ),
               IconButton(
-                icon: Icon(Icons.arrow_downward_outlined),
+                icon: Icon(
+                  Icons.keyboard_arrow_down,
+                ),
                 onPressed: () {
                   var currentId = intervals.indexOf(interval);
                   if (currentId == intervals.length - 1) {
                     print('cur id = intervals len');
                     List<double> cur = disassembleInterval(interval);
-                    double curStart = cur[0];
-                    double curEnd = cur[1];
-                    double curMid = (cur[0] + cur[1]) / 2;
+                    String curStart = (cur[0]).toStringAsFixed(2);
+                    String curEnd = (cur[1]).toStringAsFixed(2);
+                    String curMid = ((cur[0] + cur[1]) / 2).toStringAsFixed(2);
                     String newCurrentInterval = '$curStart-$curMid';
                     String nextInterval = '$curMid-$curEnd';
                     setState(() {
@@ -263,7 +270,6 @@ class _KernPage extends State<KernPage> {
         );
         return;
       }
-      // print('macros ${macros[0]}');
       for (var m in macros) {
         String interval = '${toJsonObject(m['meta'])['depth_start']}-'
             '${toJsonObject(m['meta'])['depth_end']}';
@@ -440,7 +446,7 @@ class _KernPage extends State<KernPage> {
                         sigmaY: 5.0,
                       ),
                       child: Container(
-                        color: Color(0xff93b8f6).withOpacity(0.4),
+                        color: Theme.of(context).accentColor.withOpacity(0.4),
                       ),
                     ),
                   ),

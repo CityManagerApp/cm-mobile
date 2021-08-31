@@ -21,7 +21,6 @@ Future<String> getContainerDescription({
   String containerId,
 }) async {
   print('request box description ($containerId) accessed');
-  print('url: ${global["server_url"]}/api/v1/containermeta/$containerId');
 
   final http.Response response = await http.get(
     '${global["server_url"]}/api/v1/containermeta/$containerId',
