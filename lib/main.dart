@@ -17,7 +17,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  static final String title = 'ЦЛИК (v1.1.3)';
+  static final String title = 'ЦЛИК (v1.1.4)';
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.green,
         accentColor: const Color(0xff2ECC71),
+        bottomAppBarColor: const Color(0xffE5E5E5),
         scaffoldBackgroundColor: const Color(0xffE5E5E5),
+        backgroundColor: const Color(0xffE5E5E5),
         fontFamily: 'Roboto',
         textTheme: const TextTheme(
           headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),

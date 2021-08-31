@@ -71,7 +71,6 @@ class _QRScanPageState extends State<QRScanPage> {
                 onClicked: () => scanQRCode(),
               ),
               SizedBox(height: 24),
-              // SizedBox(height: 8),
               // Text(
               //   'debug: $qrCode',
               //   style: TextStyle(

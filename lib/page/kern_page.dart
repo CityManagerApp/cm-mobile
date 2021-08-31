@@ -298,10 +298,20 @@ class _KernPage extends State<KernPage> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
-        // appBar: AppBar(
-        //   title: Text(MyApp.title),
-        //   toolbarHeight: 48,
-        // ),
+        appBar: AppBar(
+          title: Text(
+            MyApp.title,
+            style: TextStyle(
+              color: Color(0xff000000),
+            ),
+          ),
+          leading: BackButton(
+            color: Colors.black,
+          ),
+          toolbarHeight: 56,
+          backgroundColor: Theme.of(context).bottomAppBarColor,
+          elevation: 3,
+        ),
         body: GestureDetector(
           onPanEnd: (d) {
             if (d.velocity.pixelsPerSecond.dy > swipeDetectionThreshold) {
@@ -337,17 +347,17 @@ class _KernPage extends State<KernPage> {
                             ),
                           ),
                           padding: EdgeInsets.all(10.0),
-                          borderSide: BorderSide(color: Colors.blue),
+                          borderSide:
+                              BorderSide(color: Theme.of(context).accentColor),
                           shape: const RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(6.0)),
                           ),
                           child: Column(
-                            // Replace with a Row for horizontal icon + text
                             children: <Widget>[
                               Icon(
                                 Icons.add_a_photo_outlined,
-                                color: Colors.blue,
+                                color: Theme.of(context).accentColor,
                                 size: 64,
                               ),
                             ],
@@ -386,7 +396,8 @@ class _KernPage extends State<KernPage> {
                                   Fluttertoast.showToast(msg: 'Отправлено!');
                                 },
                                 padding: EdgeInsets.all(10.0),
-                                borderSide: BorderSide(color: Colors.blue),
+                                borderSide: BorderSide(
+                                    color: Theme.of(context).accentColor),
                                 shape: const RoundedRectangleBorder(
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(6.0)),
@@ -396,13 +407,13 @@ class _KernPage extends State<KernPage> {
                                   children: <Widget>[
                                     Icon(
                                       Icons.upload_outlined,
-                                      color: Colors.blue,
+                                      color: Theme.of(context).accentColor,
                                       size: 64,
                                     ),
                                     SizedBox(width: 24),
                                     Text("Сдать макроописания",
                                         style: TextStyle(
-                                          color: Colors.blue,
+                                          color: Theme.of(context).accentColor,
                                           fontSize: 22,
                                         )),
                                   ],
