@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'dart:ui';
 
@@ -283,6 +284,7 @@ class _KernPage extends State<KernPage> {
           global["pulled_intervals"] = [interval];
         }
         print('init macro $interval');
+        log('pulled: ${global["pulled_intervals"]}');
         addInterval(
           interval: interval,
         );
@@ -540,7 +542,7 @@ class DrawerWidget extends StatelessWidget {
                             Icons.all_inbox_rounded,
                             color: Colors.white,
                           ),
-                          title: Text('Описание контейнера',
+                          title: Text('Описание керна',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,

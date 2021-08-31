@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
@@ -93,7 +94,7 @@ Future<String> uploadMacro({
   DateTime now = new DateTime.now();
   var formatter = new DateFormat('yyyy.MM.dd hh:mm:ss');
   String formattedDate = formatter.format(now);
-  print('upload macro accessed ${macroInfo['interval']}, $containerId');
+  log('upload macro accessed ${macroInfo['interval']}, $containerId');
   String uploadMode = 'postitem';
   // если спуллено на ините то делаем только апдейт (уже создано)
   if (global.containsKey("pulled_intervals")) {
@@ -103,28 +104,54 @@ Future<String> uploadMacro({
   }
   // сам запрос
   final http.Response response = await http.post(
-    '${global["server_url"]}/api/v1/$uploadMode}',
+    '${global["server_url"]}/api/v1/$uploadMode',
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8; Accept-Language=ru-RU',
     },
-    body: '{"parent_uuid":"$containerId",'
-        '"name":"${macroInfo['interval']}",'
-        '"type":"MACROINFO",'
-        '"meta":{"leaf":true,'
-        '"date_time":"$formattedDate",'
-        '"depth_end":${macroInfo['interval'].split('-')[1]},'
+    body: '{'
+        '"parent_uuid": "$containerId",'
+        '"name": "${macroInfo['interval']}",'
+        '"type": "MACROINFO",'
+        '"meta": {'
+        '"leaf": true,'
+        '"date_time": "$formattedDate",'
+        '"depth_end":  ${macroInfo['interval'].split('-')[1]},'
         '"depth_start":${macroInfo['interval'].split('-')[0]},'
-        '"description":"${macroInfo['text_description']}",'
-        '"tree_visible":false,'
-        '"label_date_time":{"label":"Дата и время создания"},'
-        '"label_depth_end":{"label":"Конец интервала"},'
-        '"label_depth_start":{"label":"Начало интервала"},'
-        '"label_description":{"label":"Описание"}},"data":{}}',
+        '"description": "${macroInfo['text_description']}",'
+        '"tree_visible": false,'
+        '"label_date_time": {'
+        '"label": "Дата и время создания"'
+        '},'
+        '"label_depth_end": {'
+        '"label": "Конец интервала"'
+        '},'
+        '"label_depth_start": {'
+        '"label": "Начало интервала"'
+        '},'
+        '"label_description": {'
+        '"label": "Описание"'
+        '}'
+        '},'
+        '"data": {}'
+        '}',
+    // '{"parent_uuid":"$containerId",'
+    // '"name":"${macroInfo['interval']}",'
+    // '"type":"MACROINFO",'
+    // '"meta":{"leaf":true,'
+    // '"date_time":"$formattedDate",'
+    // '"depth_end":${macroInfo['interval'].split('-')[1]},'
+    // '"depth_start":${macroInfo['interval'].split('-')[0]},'
+    // '"description":"${macroInfo['text_description']}",'
+    // '"tree_visible":false,'
+    // '"label_date_time":{"label":"Дата и время создания"},'
+    // '"label_depth_end":{"label":"Конец интервала"},'
+    // '"label_depth_start":{"label":"Начало интервала"},'
+    // '"label_description":{"label":"Описание"}},"data":{}}',
     encoding: Encoding.getByName("utf-8"),
   );
   // если отправили новый то в дальнейшем нужно будет апдейтать только
   if (uploadMode == 'postitem') {
-    print('postitem response: ${response.body.length}');
+    log('postitem ${macroInfo['interval']} response json: ${response.body} (${response.body.length}) : ${response.statusCode}');
     if (global.containsKey("pulled_intervals")) {
       global["pulled_intervals"].add(macroInfo['interval']);
     } else {
