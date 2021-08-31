@@ -98,16 +98,15 @@ class _QRScanPageState extends State<QRScanPage> {
 
       if (!mounted || qrCode == "-1") return;
 
+      setState(() {
+        this.qrCode = qrCode;
+        global["container_uuid"] = qrCode;
+      });
       List<dynamic> box =
           jsonDecode(await getContainerDescription(containerId: qrCode));
       box.forEach((elem) {
         global[elem['type'].toLowerCase() + '_scanned'] = elem;
         print('set ${elem['type'].toLowerCase() + '_scanned'}');
-      });
-
-      setState(() {
-        this.qrCode = qrCode;
-        global["container_uuid"] = qrCode;
       });
 
       Navigator.of(context).push(MaterialPageRoute(

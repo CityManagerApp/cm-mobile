@@ -68,7 +68,11 @@ class _KernPage extends State<KernPage> {
     print('($aStart, $aEnd)');
     print('($bStart, $bEnd)');
 
-    return ['$aStart-$aEnd', '$mStart-$mEnd', '$bStart-$bEnd'];
+    return [
+      '${aStart.toStringAsFixed(2)}-${aEnd.toStringAsFixed(2)}',
+      '${mStart.toStringAsFixed(2)}-${mEnd.toStringAsFixed(2)}',
+      '${bStart.toStringAsFixed(2)}-${bEnd.toStringAsFixed(2)}'
+    ];
   }
 
   addInterval({
