@@ -14,11 +14,16 @@ class ButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) => RaisedButton(
         child: Text(
           text,
-          style: TextStyle(fontSize: 24),
+          style: TextStyle(
+            fontSize: 18,
+            letterSpacing: 1.0,
+          ),
         ),
-        shape: StadiumBorder(),
-        color: Theme.of(context).primaryColor,
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(4),
+        ),
+        color: Theme.of(context).accentColor,
+        padding: EdgeInsets.symmetric(horizontal: 18, vertical: 10),
         textColor: Colors.white,
         onPressed: onClicked,
       );

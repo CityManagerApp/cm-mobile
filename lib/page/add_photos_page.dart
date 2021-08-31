@@ -82,9 +82,10 @@ class _AddPhotosPage extends State<AddPhotosPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(MyApp.title),
-      ),
+      // appBar: AppBar(
+      //   title: Text('${MyApp.title} / ${widget.currentInterval}'),
+      //   toolbarHeight: 48,
+      // ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

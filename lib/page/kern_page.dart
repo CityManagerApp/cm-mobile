@@ -298,10 +298,10 @@ class _KernPage extends State<KernPage> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
-        appBar: AppBar(
-          title: Text(MyApp.title),
-          toolbarHeight: 48,
-        ),
+        // appBar: AppBar(
+        //   title: Text(MyApp.title),
+        //   toolbarHeight: 48,
+        // ),
         body: GestureDetector(
           onPanEnd: (d) {
             if (d.velocity.pixelsPerSecond.dy > swipeDetectionThreshold) {
@@ -434,14 +434,14 @@ class _KernPage extends State<KernPage> {
                     ),
                   ),
                 ),
-                AnimatedPositioned(
-                  curve: Curves.easeInOut,
-                  duration: Duration(milliseconds: drawerAnimationDuration),
-                  left: 0,
-                  bottom:
-                      showDrawer ? -25 : -(height * drawerSurfaceRatio) + 64,
-                  child: DrawerWidget(),
-                )
+                // AnimatedPositioned(
+                //   curve: Curves.easeInOut,
+                //   duration: Duration(milliseconds: drawerAnimationDuration),
+                //   left: 0,
+                //   bottom:
+                //       showDrawer ? -25 : -(height * drawerSurfaceRatio) + 64,
+                //   child: DrawerWidget(),
+                // )
               ],
             ),
           ),

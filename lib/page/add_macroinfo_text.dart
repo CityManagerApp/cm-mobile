@@ -29,10 +29,10 @@ class _AddMacroinfoText extends State<AddMacroinfoText> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
-      appBar: AppBar(
-        title: Text('${MyApp.title} / ${widget.currentInterval}'),
-        toolbarHeight: 48,
-      ),
+      // appBar: AppBar(
+      //   title: Text('${MyApp.title} / ${widget.currentInterval}'),
+      //   toolbarHeight: 48,
+      // ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

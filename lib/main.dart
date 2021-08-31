@@ -17,18 +17,28 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  static final String title = 'ЦЛИК (v1.1.2)';
+  static final String title = 'ЦЛИК (v1.1.3)';
 
   @override
   Widget build(BuildContext context) {
+    global["server_url_default"] = "https://webuser:webuser@kernlab.devogip.ru";
+    global["server_url"] = global["server_url_default"];
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: title,
       theme: ThemeData(
-        primaryColor: Colors.blue,
-        scaffoldBackgroundColor: Color(0x000000),
+        primaryColor: Colors.green,
+        accentColor: const Color(0xff2ECC71),
+        scaffoldBackgroundColor: const Color(0xffE5E5E5),
+        fontFamily: 'Roboto',
+        textTheme: const TextTheme(
+          headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
+          headline6: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
+          bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+        ),
       ),
-      home: MainPage(title: title),
+      home: QRScanPage(),
+      // home: MainPage(title: title),
     );
   }
 }
@@ -47,9 +57,6 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
-    // Navigator.of(context).push(MaterialPageRoute(
-    //   builder: (BuildContext context) => QRScanPage(),
-    // ));
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),

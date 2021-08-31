@@ -23,7 +23,7 @@ Future<String> getContainerDescription({
   print('request box description ($containerId) accessed');
 
   final http.Response response = await http.get(
-    'https://webuser:webuser@kernlab.devogip.ru/api/v1/containermeta/$containerId',
+    '${global["server_url"]}/api/v1/containermeta/$containerId',
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8; Accept-Language=ru-RU',
     },
@@ -44,7 +44,7 @@ Future<String> getContainerMacros({
   print('request macros ($containerId) accessed');
 
   final http.Response response = await http.get(
-    'https://webuser:webuser@kernlab.devogip.ru/api/v1/childrenitems/$containerId/MACROINFO',
+    '${global["server_url"]}/api/v1/childrenitems/$containerId/MACROINFO',
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8; Accept-Language=ru-RU',
     },
@@ -68,7 +68,7 @@ Future<String> uploadImage({
   String formattedDate = formatter.format(now);
   print('formated date $formattedDate');
   final http.Response response = await http.post(
-    'https://webuser:webuser@kernlab.devogip.ru/api/v1/postitem',
+    '${global["server_url"]}/api/v1/postitem',
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8; Accept-Language=ru-RU',
     },
@@ -103,7 +103,7 @@ Future<String> uploadMacro({
   }
   // сам запрос
   final http.Response response = await http.post(
-    'https://webuser:webuser@kernlab.devogip.ru/api/v1/$uploadMode}',
+    '${global["server_url"]}/api/v1/$uploadMode}',
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8; Accept-Language=ru-RU',
     },
