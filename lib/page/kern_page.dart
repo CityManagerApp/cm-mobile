@@ -340,103 +340,126 @@ class _KernPage extends State<KernPage> {
             child: Stack(
               children: <Widget>[
                 Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      SizedBox(
-                        height: 8,
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width - 24,
-                        height: MediaQuery.of(context).size.height / 6,
-                        child: OutlineButton(
-                          onPressed: () => Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  AddPhotosPage(),
+                  child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 8,
+                          ),
+                          FlatButton(
+                            onPressed: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    AddPhotosPage(),
+                              ),
+                            ),
+                            padding: EdgeInsets.all(8.0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              // crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "Фотографии",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Color(0xff000000),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text(
+                                  "Фотографии пока не загружены. "
+                                  "Загрузите фотографии из галереи "
+                                  "или сфотографируйте образцы керна",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Color(0xff666666),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 32,
+                                ),
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    "ДОБАВИТЬ ФОТО",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      letterSpacing: 1.0,
+                                      color: Theme.of(context).accentColor,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          padding: EdgeInsets.all(10.0),
-                          borderSide:
-                              BorderSide(color: Theme.of(context).accentColor),
-                          shape: const RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(6.0)),
+                          SizedBox(
+                            height: 8,
                           ),
-                          child: Column(
-                            children: <Widget>[
-                              Icon(
-                                Icons.add_a_photo_outlined,
-                                color: Theme.of(context).accentColor,
-                                size: 64,
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "Интервалы",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Color(0xff000000),
+                                ),
                               ),
-                            ],
+                            ),
                           ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 8,
-                      ),
-                      SizedBox(
-                        height:
-                            MediaQuery.of(context).size.height * 5 / 6 - 100,
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              ...intervalElements,
-                              SizedBox(
-                                height: 20,
-                              ),
-                              OutlineButton(
-                                onPressed: () {
-                                  for (String i in intervals) {
-                                    uploadMacro(
-                                      macroInfo: <String, String>{
-                                        'interval': i,
-                                        'text_description': global.containsKey(
-                                                "macroinfo_text_description:$i")
-                                            ? global[
-                                                "macroinfo_text_description:$i"]
-                                            : 'Было сдано пустое описание.',
-                                      },
-                                      containerId: global["container_uuid"],
-                                    );
-                                  }
+                          SizedBox(
+                            height: 8,
+                          ),
+                          ...intervalElements,
+                          // SizedBox(
+                          //   height: 8,
+                          // ),
+                          FlatButton(
+                            onPressed: () {
+                              for (String i in intervals) {
+                                uploadMacro(
+                                  macroInfo: <String, String>{
+                                    'interval': i,
+                                    'text_description': global.containsKey(
+                                            "macroinfo_text_description:$i")
+                                        ? global[
+                                            "macroinfo_text_description:$i"]
+                                        : 'Было сдано пустое описание.',
+                                  },
+                                  containerId: global["container_uuid"],
+                                );
+                              }
 
-                                  Fluttertoast.showToast(msg: 'Отправлено!');
-                                },
-                                padding: EdgeInsets.all(10.0),
-                                borderSide: BorderSide(
-                                    color: Theme.of(context).accentColor),
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(6.0)),
-                                ),
-                                child: Row(
-                                  // Replace with a Row for horizontal icon + text
-                                  children: <Widget>[
-                                    Icon(
-                                      Icons.upload_outlined,
-                                      color: Theme.of(context).accentColor,
-                                      size: 64,
-                                    ),
-                                    SizedBox(width: 24),
-                                    Text("Сдать макроописания",
-                                        style: TextStyle(
-                                          color: Theme.of(context).accentColor,
-                                          fontSize: 22,
-                                        )),
-                                  ],
+                              Fluttertoast.showToast(msg: 'Отправлено!');
+                            },
+                            padding: EdgeInsets.all(10.0),
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                "ОТПРАВИТЬ МАКРООПИСАНИЯ",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  letterSpacing: 1.0,
+                                  color: Theme.of(context).accentColor,
                                 ),
                               ),
-                              SizedBox(
-                                height: 64 + 8.0,
-                              ),
-                            ],
+                            ),
                           ),
-                        ),
+                          SizedBox(
+                            height: 64 + 8.0,
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
                 IgnorePointer(
@@ -455,14 +478,14 @@ class _KernPage extends State<KernPage> {
                     ),
                   ),
                 ),
-                // AnimatedPositioned(
-                //   curve: Curves.easeInOut,
-                //   duration: Duration(milliseconds: drawerAnimationDuration),
-                //   left: 0,
-                //   bottom:
-                //       showDrawer ? -25 : -(height * drawerSurfaceRatio) + 64,
-                //   child: DrawerWidget(),
-                // )
+                AnimatedPositioned(
+                  curve: Curves.easeInOut,
+                  duration: Duration(milliseconds: drawerAnimationDuration),
+                  left: 0,
+                  bottom:
+                      showDrawer ? -25 : -(height * drawerSurfaceRatio) + 64,
+                  child: DrawerWidget(),
+                )
               ],
             ),
           ),
@@ -474,7 +497,7 @@ class _KernPage extends State<KernPage> {
 
 bool showDrawer = false;
 const int drawerAnimationDuration = 228;
-double drawerSurfaceRatio = 0.75;
+double drawerSurfaceRatio = 0.85;
 
 class DrawerWidget extends StatelessWidget {
   @override
@@ -492,7 +515,7 @@ class DrawerWidget extends StatelessWidget {
           decoration: BoxDecoration(
             color: showDrawer
                 ? Color(0xff404040)
-                : Colors.blueAccent.withOpacity(0.8),
+                : Theme.of(context).accentColor.withOpacity(0.8),
           ),
           child: Padding(
             padding:
@@ -506,47 +529,221 @@ class DrawerWidget extends StatelessWidget {
                   size: 48,
                   color: Colors.white.withOpacity(0.75),
                 ),
-                Column(
-                  children: <Widget>[
-                    ListTile(
-                      leading: Icon(
-                        Icons.all_inbox_rounded,
-                        color: Colors.white,
-                      ),
-                      title: Text('Описание контейнера',
-                          style: TextStyle(
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: <Widget>[
+                        ListTile(
+                          leading: Icon(
+                            Icons.all_inbox_rounded,
                             color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          )),
-                    ),
-                    ListTile(
-                      title: Text(
-                        '${toJsonObject(global['field_scanned']['meta'])['label_name']['label']}:\t${toJsonObject(global['field_scanned']['meta'])['name']}\n'
-                        '${toJsonObject(global['well_scanned']['meta'])['label_name']['label']}:\t${toJsonObject(global['well_scanned']['meta'])['name']}\n'
-                        '${toJsonObject(global['well_scanned']['meta'])['label_customer']['label']}:\t${toJsonObject(global['well_scanned']['meta'])['customer']}\n'
-                        '${toJsonObject(global['interval_scanned']['meta'])['label_name']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['depth_start']}-${toJsonObject(global['interval_scanned']['meta'])['depth_end']}\n'
-                        'Интервал отбора:\t${toJsonObject(global['container_scanned']['meta'])['depth_start']}-${toJsonObject(global['container_scanned']['meta'])['depth_end']}\n'
-                        '${toJsonObject(global['container_scanned']['meta'])['label_storage_number']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['storage_number']}\n'
-                        '${toJsonObject(global['container_scanned']['meta'])['label_line']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['line']}\n'
-                        '${toJsonObject(global['container_scanned']['meta'])['label_section']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['section']}\n'
-                        '${toJsonObject(global['container_scanned']['meta'])['label_row']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['row']}\n'
-                        '${toJsonObject(global['container_scanned']['meta'])['label_in_interval_number']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['in_interval_number']}\n'
-                        '${toJsonObject(global['container_scanned']['meta'])['label_container_number']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['container_number']}\n'
-                        '${toJsonObject(global['interval_scanned']['meta'])['label_total_length']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['total_length']}\n'
-                        '${toJsonObject(global['interval_scanned']['meta'])['label_extract_length']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['extract_length']}\n'
-                        '${toJsonObject(global['interval_scanned']['meta'])['label_extract_reason']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['extract_reason']}\n'
-                        '${toJsonObject(global['interval_scanned']['meta'])['label_kern_extract_equipment']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['kern_extract_equipment']}\n'
-                        '${toJsonObject(global['interval_scanned']['meta'])['label_containers_count']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['containers_count']}\n'
-                        '${toJsonObject(global['interval_scanned']['meta'])['label_extract_date']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['extract_date']}\n'
-                        '${toJsonObject(global['interval_scanned']['meta'])['label_arrival_date']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['arrival_date']}\n',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.white,
+                          ),
+                          title: Text('Описание контейнера',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              )),
                         ),
-                      ),
+                        ListTile(
+                          title: Text(
+                            "title",
+                            // '${toJsonObject(global['field_scanned']['meta'])['label_name']['label']}:\t${toJsonObject(global['field_scanned']['meta'])['name']}\n'
+                            // '${toJsonObject(global['well_scanned']['meta'])['label_name']['label']}:\t${toJsonObject(global['well_scanned']['meta'])['name']}\n'
+                            // '${toJsonObject(global['well_scanned']['meta'])['label_customer']['label']}:\t${toJsonObject(global['well_scanned']['meta'])['customer']}\n'
+                            // '${toJsonObject(global['interval_scanned']['meta'])['label_name']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['depth_start']}-${toJsonObject(global['interval_scanned']['meta'])['depth_end']}\n'
+                            // 'Интервал отбора:\t${toJsonObject(global['container_scanned']['meta'])['depth_start']}-${toJsonObject(global['container_scanned']['meta'])['depth_end']}\n'
+                            // '${toJsonObject(global['container_scanned']['meta'])['label_storage_number']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['storage_number']}\n'
+                            // '${toJsonObject(global['container_scanned']['meta'])['label_line']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['line']}\t'
+                            // '${toJsonObject(global['container_scanned']['meta'])['label_section']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['section']}\t'
+                            // '${toJsonObject(global['container_scanned']['meta'])['label_row']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['row']}\n'
+                            // '${toJsonObject(global['container_scanned']['meta'])['label_in_interval_number']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['in_interval_number']}\n'
+                            // '${toJsonObject(global['container_scanned']['meta'])['label_container_number']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['container_number']}\n'
+                            // '${toJsonObject(global['interval_scanned']['meta'])['label_total_length']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['total_length']}\t'
+                            // '${toJsonObject(global['interval_scanned']['meta'])['label_extract_length']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['extract_length']}\n'
+                            // '${toJsonObject(global['interval_scanned']['meta'])['label_extract_reason']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['extract_reason']}\n'
+                            // '${toJsonObject(global['interval_scanned']['meta'])['label_kern_extract_equipment']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['kern_extract_equipment']}\n'
+                            // '${toJsonObject(global['interval_scanned']['meta'])['label_containers_count']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['containers_count']}\n'
+                            // '${toJsonObject(global['interval_scanned']['meta'])['label_extract_date']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['extract_date']}\n'
+                            // '${toJsonObject(global['interval_scanned']['meta'])['label_arrival_date']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['arrival_date']}\n',
+                            style: TextStyle(
+                              color: Color(0xffd7d7d7),
+                              fontSize: 12,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "subtitle",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: Text(
+                            "title",
+                            style: TextStyle(
+                              color: Color(0xffd7d7d7),
+                              fontSize: 12,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "subtitle",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: Text(
+                            "title",
+                            style: TextStyle(
+                              color: Color(0xffd7d7d7),
+                              fontSize: 12,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "subtitle",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: Text(
+                            "title",
+                            style: TextStyle(
+                              color: Color(0xffd7d7d7),
+                              fontSize: 12,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "subtitle",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: Text(
+                            "title",
+                            style: TextStyle(
+                              color: Color(0xffd7d7d7),
+                              fontSize: 12,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "subtitle",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: Text(
+                            "title",
+                            style: TextStyle(
+                              color: Color(0xffd7d7d7),
+                              fontSize: 12,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "subtitle",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: Text(
+                            "title",
+                            style: TextStyle(
+                              color: Color(0xffd7d7d7),
+                              fontSize: 12,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "subtitle",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: Text(
+                            "title",
+                            style: TextStyle(
+                              color: Color(0xffd7d7d7),
+                              fontSize: 12,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "subtitle",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: Text(
+                            "title",
+                            style: TextStyle(
+                              color: Color(0xffd7d7d7),
+                              fontSize: 12,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "subtitle",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: Text(
+                            "title",
+                            style: TextStyle(
+                              color: Color(0xffd7d7d7),
+                              fontSize: 12,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "subtitle",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: Text(
+                            "title",
+                            style: TextStyle(
+                              color: Color(0xffd7d7d7),
+                              fontSize: 12,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "subtitle",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ],
             ),
