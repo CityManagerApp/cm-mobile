@@ -124,6 +124,7 @@ Future<String> uploadMacro({
   );
   // если отправили новый то в дальнейшем нужно будет апдейтать только
   if (uploadMode == 'postitem') {
+    print('postitem response: ${response.body.length}');
     if (global.containsKey("pulled_intervals")) {
       global["pulled_intervals"].add(macroInfo['interval']);
     } else {

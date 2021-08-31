@@ -61,8 +61,11 @@ class _QRScanPageState extends State<QRScanPage> {
                 ),
               ),
               SizedBox(height: 26),
-              Image(
-                image: AssetImage('assets/icons/welcome.png'),
+              SizedBox(
+                child: Image(
+                  image: AssetImage('assets/icons/welcome.png'),
+                  height: MediaQuery.of(context).size.height * 0.5,
+                ),
               ),
               // SvgPicture.asset('assets/icons/welcome-optimized.svg'),
               SizedBox(height: 20),
