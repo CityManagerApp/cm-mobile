@@ -17,12 +17,13 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  static final String title = 'ЦЛИК (v1.1.9)';
+  static final String title = 'ЦЛИК (v1.1.10)';
 
   @override
   Widget build(BuildContext context) {
     // global["server_url_default"] = "https://webuser:webuser@kernlab.devogip.ru";
-    global["server_url_default"] = "http://10.90.130.142";
+    // global["server_url_default"] = "http://10.90.130.142";
+    global["server_url_default"] = "http://192.168.1.33";
     global["server_url"] = global["server_url_default"];
     return MaterialApp(
       debugShowCheckedModeBanner: false,

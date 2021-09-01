@@ -29,54 +29,55 @@ class _AddPhotosPage extends State<AddPhotosPage> {
   getImage(ImageSource src) async {
     File img = await ImagePicker.pickImage(source: src);
 
-    if (img != null) {
-      File cropped = await ImageCropper.cropImage(
-        sourcePath: img.path,
-        // aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
-        compressQuality: 100,
-        // maxWidth: 300,
-        // maxHeight: 700,
-        compressFormat: ImageCompressFormat.jpg,
-        androidUiSettings: AndroidUiSettings(
-          toolbarColor: Colors.blue,
-          toolbarTitle: "Выделите только необходимое",
-          toolbarWidgetColor: Colors.white,
-          backgroundColor: Colors.white,
-        ),
-      );
-
-      var croppedDecoded = await decodeImageFromList(cropped.readAsBytesSync());
-      print(
-          'decoded image dimensions: w${croppedDecoded.width}, h${croppedDecoded.height}');
-      selected = true;
-      selectedFile = Image.file(
-        cropped,
-        width: croppedDecoded.width > MAX_PHOTO_WIDTH
-            ? MAX_PHOTO_WIDTH
-            : croppedDecoded.width,
-      );
-
-      String t = selectedFile.image
-          .toString()
-          .substring(11, selectedFile.image.toString().length - 1 - 13);
-      String croppedBase64 = base64Encode(File(t).readAsBytesSync());
-
-      print('base64 $croppedBase64'); // 'log()' to see full
-
+    // if (img != null) {
+    //   File cropped = await ImageCropper.cropImage(
+    //     sourcePath: img.path,
+    //     // aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
+    //     compressQuality: 100,
+    //     // maxWidth: 300,
+    //     // maxHeight: 700,
+    //     compressFormat: ImageCompressFormat.jpg,
+    //     androidUiSettings: AndroidUiSettings(
+    //       toolbarColor: Colors.blue,
+    //       toolbarTitle: "Выделите только необходимое",
+    //       toolbarWidgetColor: Colors.white,
+    //       backgroundColor: Colors.white,
+    //     ),
+    //   );
+    //
+    //   var croppedDecoded = await decodeImageFromList(cropped.readAsBytesSync());
+    //   print(
+    //       'decoded image dimensions: w${croppedDecoded.width}, h${croppedDecoded.height}');
+    //   selected = true;
+    //   selectedFile = Image.file(
+    //     cropped,
+    //     width: croppedDecoded.width > MAX_PHOTO_WIDTH
+    //         ? MAX_PHOTO_WIDTH
+    //         : croppedDecoded.width,
+    //   );
+    //
+    //   String t = selectedFile.image
+    //       .toString()
+    //       .substring(11, selectedFile.image.toString().length - 1 - 13);
+      String croppedBase64 = base64Encode(img.readAsBytesSync());
+    //   // String croppedBase64 = base64Encode(File(t).readAsBytesSync());
+    //
+    //   print('base64 $croppedBase64'); // 'log()' to see full
+    //
       uploadImage(
           imageBase64: croppedBase64,
           containerId: global["container_uuid"],
       );
-
-
-      this.setState(() {
-        if (global.keys.contains('kern_photos')) {
-          global['kern_photos'].add(cropped);
-        } else {
-          global['kern_photos'] = [cropped];
-        }
-      });
-    }
+    //
+    //
+    //   this.setState(() {
+    //     if (global.keys.contains('kern_photos')) {
+    //       global['kern_photos'].add(cropped);
+    //     } else {
+    //       global['kern_photos'] = [cropped];
+    //     }
+    //   });
+    // }
   }
 
   @override
