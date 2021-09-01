@@ -167,4 +167,8 @@ Future<String> uploadMacro({
   }
 
   log('updateitem: ${response.body}');
+  Fluttertoast.showToast(
+      msg: 'updateitem: '
+          '${macroInfo['id']} '
+          ': ${response.statusCode}');
 }

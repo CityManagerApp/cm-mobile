@@ -154,7 +154,9 @@ class _KernPage extends State<KernPage> {
                           "macroinfo_text_description:${intervals[currentId]}"];
                       if (!global.containsKey("pulled_intervals"))
                         global["pulled_intervals"] = [];
-                      global["pulled_intervals"].add(nextInterval);
+                      if (global["pulled_intervals"]
+                          .contains(intervals[currentId]))
+                        global["pulled_intervals"].add(nextInterval);
                       log('interval id: $intervalId');
 
                       intervalElements.removeAt(currentId);
@@ -187,14 +189,18 @@ class _KernPage extends State<KernPage> {
                         "macroinfo_text_description:${intervals[currentId - 1]}"];
                     if (!global.containsKey("pulled_intervals"))
                       global["pulled_intervals"] = [];
-                    global["pulled_intervals"].add(leftInterval);
+                    if (global["pulled_intervals"]
+                        .contains(intervals[currentId - 1]))
+                      global["pulled_intervals"].add(leftInterval);
                     intervalId[rightInterval] =
                         intervalId[intervals[currentId]];
                     global["macroinfo_text_description:$rightInterval"] = global[
                         "macroinfo_text_description:${intervals[currentId]}"];
                     if (!global.containsKey("pulled_intervals"))
                       global["pulled_intervals"] = [];
-                    global["pulled_intervals"].add(rightInterval);
+                    if (global["pulled_intervals"]
+                        .contains(intervals[currentId]))
+                      global["pulled_intervals"].add(rightInterval);
                     log('interval id: $intervalId');
 
                     intervalElements.removeAt(currentId);
@@ -244,7 +250,9 @@ class _KernPage extends State<KernPage> {
                           "macroinfo_text_description:${intervals[currentId]}"];
                       if (!global.containsKey("pulled_intervals"))
                         global["pulled_intervals"] = [];
-                      global["pulled_intervals"].add(nextInterval);
+                      if (global["pulled_intervals"]
+                          .contains(intervals[currentId]))
+                        global["pulled_intervals"].add(nextInterval);
                       log('interval id: $intervalId');
 
                       intervalElements.removeAt(currentId);
@@ -264,7 +272,9 @@ class _KernPage extends State<KernPage> {
                     return;
                   }
                   List<String> intervalVicinity = generateMiddleInterval(
-                      interval, intervals[currentId + 1]);
+                    interval,
+                    intervals[currentId + 1],
+                  );
                   String leftInterval = intervalVicinity[0];
                   String middleInterval = intervalVicinity[1];
                   String rightInterval = intervalVicinity[2];
@@ -274,14 +284,18 @@ class _KernPage extends State<KernPage> {
                         "macroinfo_text_description:${intervals[currentId]}"];
                     if (!global.containsKey("pulled_intervals"))
                       global["pulled_intervals"] = [];
-                    global["pulled_intervals"].add(leftInterval);
+                    if (global["pulled_intervals"]
+                        .contains(intervals[currentId]))
+                      global["pulled_intervals"].add(leftInterval);
                     intervalId[rightInterval] =
                         intervalId[intervals[currentId + 1]];
                     global["macroinfo_text_description:$rightInterval"] = global[
                         "macroinfo_text_description:${intervals[currentId + 1]}"];
                     if (!global.containsKey("pulled_intervals"))
                       global["pulled_intervals"] = [];
-                    global["pulled_intervals"].add(rightInterval);
+                    if (global["pulled_intervals"]
+                        .contains(intervals[currentId + 1]))
+                      global["pulled_intervals"].add(rightInterval);
                     log('interval id: $intervalId');
 
                     intervalElements.removeAt(currentId + 1);
