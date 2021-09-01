@@ -56,9 +56,7 @@ class _AddPhotosPage extends State<AddPhotosPage> {
 
       String t = selectedFile.image
           .toString()
-          .substring(11, selectedFile.image
-          .toString()
-          .length - 1 - 13);
+          .substring(11, selectedFile.image.toString().length - 1 - 13);
       // String croppedBase64 = base64Encode(await img.readAsBytes());
       String croppedBase64 = base64Encode(File(t).readAsBytesSync());
 
@@ -83,10 +81,20 @@ class _AddPhotosPage extends State<AddPhotosPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
-      // appBar: AppBar(
-      //   title: Text('${MyApp.title} / ${widget.currentInterval}'),
-      //   toolbarHeight: 48,
-      // ),
+      appBar: AppBar(
+        title: Text(
+          MyApp.title,
+          style: TextStyle(
+            color: Color(0xff000000),
+          ),
+        ),
+        leading: BackButton(
+          color: Colors.black,
+        ),
+        toolbarHeight: 56,
+        backgroundColor: Theme.of(context).bottomAppBarColor,
+        elevation: 3,
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -96,55 +104,25 @@ class _AddPhotosPage extends State<AddPhotosPage> {
               child: selected
                   ? selectedFile
                   : Icon(Icons.insert_photo,
-                      size: 64, color: Colors.blueAccent.withOpacity(0.5)),
+                      size: 80, color: Theme.of(context).accentColor.withOpacity(0.5)),
             ),
-            Row(
+            Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                OutlineButton(
-                  onPressed: () {
-                    print('Сфотографировать');
+                ButtonWidget(
+                  onClicked: () {
+                    print('СДЕЛАТЬ ФОТО');
                     getImage(ImageSource.camera);
                   },
-                  padding: EdgeInsets.all(10.0),
-                  borderSide: BorderSide(color: Colors.blue),
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(6.0)),
-                  ),
-                  child: Column(
-                    // Replace with a Row for horizontal icon + text
-                    children: <Widget>[
-                      Icon(Icons.photo_camera_outlined, color: Colors.blue),
-                      SizedBox(height: 4),
-                      Text("Сфотографировать",
-                          style: TextStyle(
-                            color: Colors.blue,
-                          )),
-                    ],
-                  ),
+                  text: "СДЕЛАТЬ ФОТО",
                 ),
-                SizedBox(width: 32),
-                OutlineButton(
-                  onPressed: () {
+                SizedBox(height: 32),
+                ButtonWidget(
+                  onClicked: () {
                     print('С галереи');
                     getImage(ImageSource.gallery);
                   },
-                  padding: EdgeInsets.all(10.0),
-                  borderSide: BorderSide(color: Colors.blue),
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(6.0)),
-                  ),
-                  child: Column(
-                    // Replace with a Row for horizontal icon + text
-                    children: <Widget>[
-                      Icon(Icons.photo_album_outlined, color: Colors.blue),
-                      SizedBox(height: 4),
-                      Text("С галереи",
-                          style: TextStyle(
-                            color: Colors.blue,
-                          )),
-                    ],
-                  ),
+                  text: "ИЗ ГАЛЕРЕИ",
                 ),
               ],
             ),

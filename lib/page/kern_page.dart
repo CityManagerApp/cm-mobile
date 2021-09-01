@@ -550,7 +550,7 @@ class _KernPage extends State<KernPage> {
                         sigmaY: 5.0,
                       ),
                       child: Container(
-                        color: Theme.of(context).accentColor.withOpacity(0.4),
+                        color: Theme.of(context).backgroundColor.withOpacity(0.4),
                       ),
                     ),
                   ),
@@ -626,53 +626,292 @@ class DrawerWidget extends StatelessWidget {
                         ),
                         ListTile(
                           title: Text(
-                            '${toJsonObject(global['field_scanned']['meta'])['label_name']['label']}:\t${toJsonObject(global['field_scanned']['meta'])['name']}\n'
-                            '${toJsonObject(global['well_scanned']['meta'])['label_name']['label']}:\t${toJsonObject(global['well_scanned']['meta'])['name']}\n'
-                            '${toJsonObject(global['well_scanned']['meta'])['label_customer']['label']}:\t${toJsonObject(global['well_scanned']['meta'])['customer']}\n'
-                            '${toJsonObject(global['interval_scanned']['meta'])['label_name']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['depth_start']}-${toJsonObject(global['interval_scanned']['meta'])['depth_end']}\n'
-                            'Интервал отбора:\t${toJsonObject(global['container_scanned']['meta'])['depth_start']}-${toJsonObject(global['container_scanned']['meta'])['depth_end']}\n'
-                            '${toJsonObject(global['container_scanned']['meta'])['label_storage_number']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['storage_number']}\n'
-                            '${toJsonObject(global['container_scanned']['meta'])['label_line']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['line']}\t'
-                            '${toJsonObject(global['container_scanned']['meta'])['label_section']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['section']}\t'
-                            '${toJsonObject(global['container_scanned']['meta'])['label_row']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['row']}\n'
-                            '${toJsonObject(global['container_scanned']['meta'])['label_in_interval_number']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['in_interval_number']}\n'
-                            '${toJsonObject(global['container_scanned']['meta'])['label_container_number']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['container_number']}\n'
-                            '${toJsonObject(global['interval_scanned']['meta'])['label_total_length']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['total_length']}\t'
-                            '${toJsonObject(global['interval_scanned']['meta'])['label_extract_length']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['extract_length']}\n'
-                            '${toJsonObject(global['interval_scanned']['meta'])['label_extract_reason']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['extract_reason']}\n'
-                            '${toJsonObject(global['interval_scanned']['meta'])['label_kern_extract_equipment']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['kern_extract_equipment']}\n'
-                            '${toJsonObject(global['interval_scanned']['meta'])['label_containers_count']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['containers_count']}\n'
-                            '${toJsonObject(global['interval_scanned']['meta'])['label_extract_date']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['extract_date']}\n'
-                            '${toJsonObject(global['interval_scanned']['meta'])['label_arrival_date']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['arrival_date']}\n',
+                            '${toJsonObject(global['field_scanned']['meta'])['label_name']['label']}',
                             style: TextStyle(
                               color: Color(0xffd7d7d7),
                               fontSize: 12,
                             ),
                           ),
-                          // subtitle: Text(
-                          //   "subtitle",
-                          //   style: TextStyle(
-                          //     color: Colors.white,
-                          //     fontSize: 16,
-                          //   ),
-                          // ),
+                          subtitle: Text(
+                            "${toJsonObject(global['field_scanned']['meta'])['name']}",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
                         ),
-                        // ListTile(
-                        //   title: Text(
-                        //     "title",
-                        //     style: TextStyle(
-                        //       color: Color(0xffd7d7d7),
-                        //       fontSize: 12,
-                        //     ),
-                        //   ),
-                        //   subtitle: Text(
-                        //     "subtitle",
-                        //     style: TextStyle(
-                        //       color: Colors.white,
-                        //       fontSize: 16,
-                        //     ),
-                        //   ),
-                        // ),
+                        ListTile(
+                          title: Text(
+                            '${toJsonObject(global['well_scanned']['meta'])['label_name']['label']}',
+                            style: TextStyle(
+                              color: Color(0xffd7d7d7),
+                              fontSize: 12,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "${toJsonObject(global['well_scanned']['meta'])['name']}",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: Text(
+                            '${toJsonObject(global['well_scanned']['meta'])['label_customer']['label']}',
+                            style: TextStyle(
+                              color: Color(0xffd7d7d7),
+                              fontSize: 12,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "${toJsonObject(global['well_scanned']['meta'])['customer']}",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: Text(
+                            '${toJsonObject(global['interval_scanned']['meta'])['label_name']['label']}',
+                            style: TextStyle(
+                              color: Color(0xffd7d7d7),
+                              fontSize: 12,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "${toJsonObject(global['interval_scanned']['meta'])['depth_start']}-${toJsonObject(global['interval_scanned']['meta'])['depth_end']}",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: Text(
+                            'Интервал отбора:',
+                            style: TextStyle(
+                              color: Color(0xffd7d7d7),
+                              fontSize: 12,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "${toJsonObject(global['container_scanned']['meta'])['depth_start']}-${toJsonObject(global['container_scanned']['meta'])['depth_end']}",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: Text(
+                            '${toJsonObject(global['container_scanned']['meta'])['label_storage_number']['label']}',
+                            style: TextStyle(
+                              color: Color(0xffd7d7d7),
+                              fontSize: 12,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "${toJsonObject(global['container_scanned']['meta'])['storage_number']}",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: Text(
+                            '${toJsonObject(global['container_scanned']['meta'])['label_line']['label']}',
+                            style: TextStyle(
+                              color: Color(0xffd7d7d7),
+                              fontSize: 12,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "${toJsonObject(global['container_scanned']['meta'])['line']}",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: Text(
+                            '${toJsonObject(global['container_scanned']['meta'])['label_section']['label']}',
+                            style: TextStyle(
+                              color: Color(0xffd7d7d7),
+                              fontSize: 12,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "${toJsonObject(global['container_scanned']['meta'])['section']}",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: Text(
+                            '${toJsonObject(global['container_scanned']['meta'])['label_row']['label']}',
+                            style: TextStyle(
+                              color: Color(0xffd7d7d7),
+                              fontSize: 12,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "${toJsonObject(global['container_scanned']['meta'])['row']}",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: Text(
+                            '${toJsonObject(global['container_scanned']['meta'])['label_in_interval_number']['label']}',
+                            style: TextStyle(
+                              color: Color(0xffd7d7d7),
+                              fontSize: 12,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "${toJsonObject(global['container_scanned']['meta'])['in_interval_number']}",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: Text(
+                            '${toJsonObject(global['container_scanned']['meta'])['label_container_number']['label']}',
+                            style: TextStyle(
+                              color: Color(0xffd7d7d7),
+                              fontSize: 12,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "${toJsonObject(global['container_scanned']['meta'])['container_number']}",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: Text(
+                            '${toJsonObject(global['interval_scanned']['meta'])['label_total_length']['label']}',
+                            style: TextStyle(
+                              color: Color(0xffd7d7d7),
+                              fontSize: 12,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "${toJsonObject(global['interval_scanned']['meta'])['total_length']}",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: Text(
+                            '${toJsonObject(global['interval_scanned']['meta'])['label_extract_length']['label']}',
+                            style: TextStyle(
+                              color: Color(0xffd7d7d7),
+                              fontSize: 12,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "${toJsonObject(global['interval_scanned']['meta'])['extract_length']}",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: Text(
+                            '${toJsonObject(global['interval_scanned']['meta'])['label_extract_reason']['label']}',
+                            style: TextStyle(
+                              color: Color(0xffd7d7d7),
+                              fontSize: 12,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "${toJsonObject(global['interval_scanned']['meta'])['extract_reason']}",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: Text(
+                            '${toJsonObject(global['interval_scanned']['meta'])['label_kern_extract_equipment']['label']}',
+                            style: TextStyle(
+                              color: Color(0xffd7d7d7),
+                              fontSize: 12,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "${toJsonObject(global['interval_scanned']['meta'])['kern_extract_equipment']}",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: Text(
+                            '${toJsonObject(global['interval_scanned']['meta'])['label_containers_count']['label']}',
+                            style: TextStyle(
+                              color: Color(0xffd7d7d7),
+                              fontSize: 12,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "${toJsonObject(global['interval_scanned']['meta'])['containers_count']}",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: Text(
+                            '${toJsonObject(global['interval_scanned']['meta'])['label_extract_date']['label']}',
+                            style: TextStyle(
+                              color: Color(0xffd7d7d7),
+                              fontSize: 12,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "${toJsonObject(global['interval_scanned']['meta'])['extract_date']}",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        ListTile(
+                          title: Text(
+                            '${toJsonObject(global['interval_scanned']['meta'])['label_arrival_date']['label']}',
+                            style: TextStyle(
+                              color: Color(0xffd7d7d7),
+                              fontSize: 12,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "${toJsonObject(global['interval_scanned']['meta'])['arrival_date']}",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
