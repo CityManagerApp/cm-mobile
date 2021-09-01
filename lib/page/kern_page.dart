@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
@@ -36,6 +37,7 @@ class KernPage extends StatefulWidget {
 class _KernPage extends State<KernPage> {
   List<Widget> intervalElements = [];
   List<String> intervals = [];
+  var intervalId = new HashMap<String, String>(); // interval -> uuid
   bool macrosUploaded = false;
 
   List<double> disassembleInterval(String i) {
@@ -146,6 +148,15 @@ class _KernPage extends State<KernPage> {
                     String newCurrentInterval = '$curStart-$curMid';
                     String nextInterval = '$curMid-$curEnd';
                     setState(() {
+                      intervalId[nextInterval] =
+                          intervalId[intervals[currentId]];
+                      global["macroinfo_text_description:$nextInterval"] = global[
+                          "macroinfo_text_description:${intervals[currentId]}"];
+                      if (!global.containsKey("pulled_intervals"))
+                        global["pulled_intervals"] = [];
+                      global["pulled_intervals"].add(nextInterval);
+                      log('interval id: $intervalId');
+
                       intervalElements.removeAt(currentId);
                       intervals.removeAt(currentId);
 
@@ -163,15 +174,37 @@ class _KernPage extends State<KernPage> {
                     return;
                   }
                   List<String> intervalVicinity = generateMiddleInterval(
-                      intervals[currentId - 1], interval);
+                    intervals[currentId - 1],
+                    interval,
+                  );
                   String leftInterval = intervalVicinity[0];
                   String middleInterval = intervalVicinity[1];
                   String rightInterval = intervalVicinity[2];
                   setState(() {
+                    intervalId[leftInterval] =
+                        intervalId[intervals[currentId - 1]];
+                    global["macroinfo_text_description:$leftInterval"] = global[
+                        "macroinfo_text_description:${intervals[currentId - 1]}"];
+                    if (!global.containsKey("pulled_intervals"))
+                      global["pulled_intervals"] = [];
+                    global["pulled_intervals"].add(leftInterval);
+                    intervalId[rightInterval] =
+                        intervalId[intervals[currentId]];
+                    global["macroinfo_text_description:$rightInterval"] = global[
+                        "macroinfo_text_description:${intervals[currentId]}"];
+                    if (!global.containsKey("pulled_intervals"))
+                      global["pulled_intervals"] = [];
+                    global["pulled_intervals"].add(rightInterval);
+                    log('interval id: $intervalId');
+
                     intervalElements.removeAt(currentId);
                     intervals.removeAt(currentId);
+                    log('left : ${global["macroinfo_text_description:$leftInterval"]}');
+                    log('right : ${global["macroinfo_text_description:$rightInterval"]}');
                     intervalElements.removeAt(currentId - 1);
                     intervals.removeAt(currentId - 1);
+                    intervalId.removeWhere((key, value) => key == interval);
+
                     addInterval(
                       where: 'before',
                       id: currentId - 1,
@@ -205,6 +238,15 @@ class _KernPage extends State<KernPage> {
                     String newCurrentInterval = '$curStart-$curMid';
                     String nextInterval = '$curMid-$curEnd';
                     setState(() {
+                      intervalId[nextInterval] =
+                          intervalId[intervals[currentId]];
+                      global["macroinfo_text_description:$nextInterval"] = global[
+                          "macroinfo_text_description:${intervals[currentId]}"];
+                      if (!global.containsKey("pulled_intervals"))
+                        global["pulled_intervals"] = [];
+                      global["pulled_intervals"].add(nextInterval);
+                      log('interval id: $intervalId');
+
                       intervalElements.removeAt(currentId);
                       intervals.removeAt(currentId);
 
@@ -227,6 +269,21 @@ class _KernPage extends State<KernPage> {
                   String middleInterval = intervalVicinity[1];
                   String rightInterval = intervalVicinity[2];
                   setState(() {
+                    intervalId[leftInterval] = intervalId[intervals[currentId]];
+                    global["macroinfo_text_description:$leftInterval"] = global[
+                        "macroinfo_text_description:${intervals[currentId]}"];
+                    if (!global.containsKey("pulled_intervals"))
+                      global["pulled_intervals"] = [];
+                    global["pulled_intervals"].add(leftInterval);
+                    intervalId[rightInterval] =
+                        intervalId[intervals[currentId + 1]];
+                    global["macroinfo_text_description:$rightInterval"] = global[
+                        "macroinfo_text_description:${intervals[currentId + 1]}"];
+                    if (!global.containsKey("pulled_intervals"))
+                      global["pulled_intervals"] = [];
+                    global["pulled_intervals"].add(rightInterval);
+                    log('interval id: $intervalId');
+
                     intervalElements.removeAt(currentId + 1);
                     intervals.removeAt(currentId + 1);
                     intervalElements.removeAt(currentId);
@@ -280,6 +337,7 @@ class _KernPage extends State<KernPage> {
         String interval = '${toJsonObject(m['meta'])['depth_start']}-'
             '${toJsonObject(m['meta'])['depth_end']}';
         global["pulled_intervals"].add(interval);
+        intervalId[interval] = m['uuid'];
         print('init macro $interval');
         log('pulled: ${global["pulled_intervals"]}');
         addInterval(
@@ -420,12 +478,14 @@ class _KernPage extends State<KernPage> {
                           ),
                           ...intervalElements,
                           FlatButton(
-                            onPressed: () {
+                            onPressed: () async {
                               int index = 0;
                               for (String i in intervals) {
-                                uploadMacro(
+                                var res = await uploadMacro(
                                   macroInfo: <String, String>{
-                                    'id': '$index',
+                                    'id': intervalId.containsKey(i)
+                                        ? '${intervalId[i]}'
+                                        : '$index',
                                     'interval': i,
                                     'text_description': global.containsKey(
                                             "macroinfo_text_description:$i")
@@ -435,6 +495,10 @@ class _KernPage extends State<KernPage> {
                                   },
                                   containerId: global["container_uuid"],
                                 );
+                                if (res != null) {
+                                  log('res not null: $res');
+                                  intervalId[i] = res;
+                                }
                                 index++;
                               }
 
@@ -548,198 +612,53 @@ class DrawerWidget extends StatelessWidget {
                         ),
                         ListTile(
                           title: Text(
-                            "title",
-                            // '${toJsonObject(global['field_scanned']['meta'])['label_name']['label']}:\t${toJsonObject(global['field_scanned']['meta'])['name']}\n'
-                            // '${toJsonObject(global['well_scanned']['meta'])['label_name']['label']}:\t${toJsonObject(global['well_scanned']['meta'])['name']}\n'
-                            // '${toJsonObject(global['well_scanned']['meta'])['label_customer']['label']}:\t${toJsonObject(global['well_scanned']['meta'])['customer']}\n'
-                            // '${toJsonObject(global['interval_scanned']['meta'])['label_name']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['depth_start']}-${toJsonObject(global['interval_scanned']['meta'])['depth_end']}\n'
-                            // 'Интервал отбора:\t${toJsonObject(global['container_scanned']['meta'])['depth_start']}-${toJsonObject(global['container_scanned']['meta'])['depth_end']}\n'
-                            // '${toJsonObject(global['container_scanned']['meta'])['label_storage_number']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['storage_number']}\n'
-                            // '${toJsonObject(global['container_scanned']['meta'])['label_line']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['line']}\t'
-                            // '${toJsonObject(global['container_scanned']['meta'])['label_section']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['section']}\t'
-                            // '${toJsonObject(global['container_scanned']['meta'])['label_row']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['row']}\n'
-                            // '${toJsonObject(global['container_scanned']['meta'])['label_in_interval_number']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['in_interval_number']}\n'
-                            // '${toJsonObject(global['container_scanned']['meta'])['label_container_number']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['container_number']}\n'
-                            // '${toJsonObject(global['interval_scanned']['meta'])['label_total_length']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['total_length']}\t'
-                            // '${toJsonObject(global['interval_scanned']['meta'])['label_extract_length']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['extract_length']}\n'
-                            // '${toJsonObject(global['interval_scanned']['meta'])['label_extract_reason']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['extract_reason']}\n'
-                            // '${toJsonObject(global['interval_scanned']['meta'])['label_kern_extract_equipment']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['kern_extract_equipment']}\n'
-                            // '${toJsonObject(global['interval_scanned']['meta'])['label_containers_count']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['containers_count']}\n'
-                            // '${toJsonObject(global['interval_scanned']['meta'])['label_extract_date']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['extract_date']}\n'
-                            // '${toJsonObject(global['interval_scanned']['meta'])['label_arrival_date']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['arrival_date']}\n',
+                            '${toJsonObject(global['field_scanned']['meta'])['label_name']['label']}:\t${toJsonObject(global['field_scanned']['meta'])['name']}\n'
+                            '${toJsonObject(global['well_scanned']['meta'])['label_name']['label']}:\t${toJsonObject(global['well_scanned']['meta'])['name']}\n'
+                            '${toJsonObject(global['well_scanned']['meta'])['label_customer']['label']}:\t${toJsonObject(global['well_scanned']['meta'])['customer']}\n'
+                            '${toJsonObject(global['interval_scanned']['meta'])['label_name']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['depth_start']}-${toJsonObject(global['interval_scanned']['meta'])['depth_end']}\n'
+                            'Интервал отбора:\t${toJsonObject(global['container_scanned']['meta'])['depth_start']}-${toJsonObject(global['container_scanned']['meta'])['depth_end']}\n'
+                            '${toJsonObject(global['container_scanned']['meta'])['label_storage_number']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['storage_number']}\n'
+                            '${toJsonObject(global['container_scanned']['meta'])['label_line']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['line']}\t'
+                            '${toJsonObject(global['container_scanned']['meta'])['label_section']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['section']}\t'
+                            '${toJsonObject(global['container_scanned']['meta'])['label_row']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['row']}\n'
+                            '${toJsonObject(global['container_scanned']['meta'])['label_in_interval_number']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['in_interval_number']}\n'
+                            '${toJsonObject(global['container_scanned']['meta'])['label_container_number']['label']}:\t${toJsonObject(global['container_scanned']['meta'])['container_number']}\n'
+                            '${toJsonObject(global['interval_scanned']['meta'])['label_total_length']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['total_length']}\t'
+                            '${toJsonObject(global['interval_scanned']['meta'])['label_extract_length']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['extract_length']}\n'
+                            '${toJsonObject(global['interval_scanned']['meta'])['label_extract_reason']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['extract_reason']}\n'
+                            '${toJsonObject(global['interval_scanned']['meta'])['label_kern_extract_equipment']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['kern_extract_equipment']}\n'
+                            '${toJsonObject(global['interval_scanned']['meta'])['label_containers_count']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['containers_count']}\n'
+                            '${toJsonObject(global['interval_scanned']['meta'])['label_extract_date']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['extract_date']}\n'
+                            '${toJsonObject(global['interval_scanned']['meta'])['label_arrival_date']['label']}:\t${toJsonObject(global['interval_scanned']['meta'])['arrival_date']}\n',
                             style: TextStyle(
                               color: Color(0xffd7d7d7),
                               fontSize: 12,
                             ),
                           ),
-                          subtitle: Text(
-                            "subtitle",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
-                          ),
+                          // subtitle: Text(
+                          //   "subtitle",
+                          //   style: TextStyle(
+                          //     color: Colors.white,
+                          //     fontSize: 16,
+                          //   ),
+                          // ),
                         ),
-                        ListTile(
-                          title: Text(
-                            "title",
-                            style: TextStyle(
-                              color: Color(0xffd7d7d7),
-                              fontSize: 12,
-                            ),
-                          ),
-                          subtitle: Text(
-                            "subtitle",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                        ListTile(
-                          title: Text(
-                            "title",
-                            style: TextStyle(
-                              color: Color(0xffd7d7d7),
-                              fontSize: 12,
-                            ),
-                          ),
-                          subtitle: Text(
-                            "subtitle",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                        ListTile(
-                          title: Text(
-                            "title",
-                            style: TextStyle(
-                              color: Color(0xffd7d7d7),
-                              fontSize: 12,
-                            ),
-                          ),
-                          subtitle: Text(
-                            "subtitle",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                        ListTile(
-                          title: Text(
-                            "title",
-                            style: TextStyle(
-                              color: Color(0xffd7d7d7),
-                              fontSize: 12,
-                            ),
-                          ),
-                          subtitle: Text(
-                            "subtitle",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                        ListTile(
-                          title: Text(
-                            "title",
-                            style: TextStyle(
-                              color: Color(0xffd7d7d7),
-                              fontSize: 12,
-                            ),
-                          ),
-                          subtitle: Text(
-                            "subtitle",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                        ListTile(
-                          title: Text(
-                            "title",
-                            style: TextStyle(
-                              color: Color(0xffd7d7d7),
-                              fontSize: 12,
-                            ),
-                          ),
-                          subtitle: Text(
-                            "subtitle",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                        ListTile(
-                          title: Text(
-                            "title",
-                            style: TextStyle(
-                              color: Color(0xffd7d7d7),
-                              fontSize: 12,
-                            ),
-                          ),
-                          subtitle: Text(
-                            "subtitle",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                        ListTile(
-                          title: Text(
-                            "title",
-                            style: TextStyle(
-                              color: Color(0xffd7d7d7),
-                              fontSize: 12,
-                            ),
-                          ),
-                          subtitle: Text(
-                            "subtitle",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                        ListTile(
-                          title: Text(
-                            "title",
-                            style: TextStyle(
-                              color: Color(0xffd7d7d7),
-                              fontSize: 12,
-                            ),
-                          ),
-                          subtitle: Text(
-                            "subtitle",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                        ListTile(
-                          title: Text(
-                            "title",
-                            style: TextStyle(
-                              color: Color(0xffd7d7d7),
-                              fontSize: 12,
-                            ),
-                          ),
-                          subtitle: Text(
-                            "subtitle",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
+                        // ListTile(
+                        //   title: Text(
+                        //     "title",
+                        //     style: TextStyle(
+                        //       color: Color(0xffd7d7d7),
+                        //       fontSize: 12,
+                        //     ),
+                        //   ),
+                        //   subtitle: Text(
+                        //     "subtitle",
+                        //     style: TextStyle(
+                        //       color: Colors.white,
+                        //       fontSize: 16,
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

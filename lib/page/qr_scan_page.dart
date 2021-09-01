@@ -199,7 +199,7 @@ showAlertDialogSettings(BuildContext context) {
 
 showAlertDialogQrCode(BuildContext context) {
   final textFieldController = TextEditingController(
-    text: "00000003-0001-0001-0001-000000000000",
+    text: "00000001-0001-0001-0001-000000000000",
   );
 
   Widget doneButton = TextButton(

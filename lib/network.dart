@@ -98,16 +98,18 @@ Future<String> uploadMacro({
   DateTime now = new DateTime.now();
   var formatter = new DateFormat('yyyy.MM.dd hh:mm:ss');
   String formattedDate = formatter.format(now);
-  log('upload macro accessed ${macroInfo['interval']}, $containerId');
   String uploadMode = 'postitem';
-  var uuid = '';
+  var uuidField = '';
   // если спуллено на ините то делаем только апдейт (уже создано)
   if (global.containsKey("pulled_intervals")) {
     if (global["pulled_intervals"].contains(macroInfo['interval'])) {
       uploadMode = 'updateitem';
-      uuid = '"uuid": "${macroInfo['id']}"';
+      uuidField = '"uuid": "${macroInfo['id']}",';
     }
   }
+  print('uuidField: $uuidField');
+  log('upload macro accessed ${macroInfo['interval']}, $containerId, upload method: $uploadMode');
+  log('${global["server_url"]}/api/v1/$uploadMode');
   // сам запрос
   final http.Response response = await http.post(
     '${global["server_url"]}/api/v1/$uploadMode',
@@ -115,7 +117,7 @@ Future<String> uploadMacro({
       'Content-Type': 'application/json; charset=UTF-8; Accept-Language=ru-RU',
     },
     body: '{'
-        '$uuid'
+        '$uuidField'
         '"parent_uuid": "$containerId",'
         '"name": "${macroInfo['interval']}",'
         '"type": "MACROINFO",'
@@ -143,22 +145,26 @@ Future<String> uploadMacro({
         '}',
     encoding: Encoding.getByName("utf-8"),
   );
-  // если отправили новый то в дальнейшем нужно будет апдейтать только
+  // если отправили новый то в дальнейшем нужно будет апдейтать
   if (uploadMode == 'postitem') {
-    log('postitem ${macroInfo['interval']} response json: ${response.body}'
-        '${json.decode(response.body)} '
-        '${json.decode(response.body)['uuid']} '
-        '(${response.body.length}) : ${response.statusCode}');
+    String uuid = json.decode(response.body)['uuid'];
+
+    log('postitem: '
+        '$uuid '
+        ': ${response.statusCode}');
 
     Fluttertoast.showToast(
-        msg: 'postitem ${macroInfo['interval']} response json: ${response.body}'
-            '${json.decode(response.body)} '
-            '${json.decode(response.body)['uuid']} '
-            '(${response.body.length}) : ${response.statusCode}');
+        msg: 'postitem: '
+            '$uuid '
+            ': ${response.statusCode}');
 
     if (!global.containsKey("pulled_intervals")) {
       global["pulled_intervals"] = [];
     }
     global["pulled_intervals"].add(macroInfo['interval']);
+
+    return uuid;
   }
+
+  log('updateitem: ${response.body}');
 }
