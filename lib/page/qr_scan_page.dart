@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:clik/page/kern_page.dart';
 import 'package:flutter/material.dart';
@@ -35,13 +36,25 @@ class _QRScanPageState extends State<QRScanPage> {
             children: <Widget>[
               Align(
                 alignment: Alignment.topRight,
-                child: IconButton(
-                  icon: Icon(Icons.settings),
-                  iconSize: 24,
-                  onPressed: () {
-                    showAlertDialog(context);
-                  },
-                  color: Color(0xff646667),
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.settings),
+                      iconSize: 24,
+                      onPressed: () {
+                        showAlertDialogSettings(context);
+                      },
+                      color: Color(0xff646667),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.qr_code),
+                      iconSize: 24,
+                      onPressed: () {
+                        showAlertDialogQrCode(context);
+                      },
+                      color: Color(0xff646667),
+                    ),
+                  ],
                 ),
               ),
               Text(
@@ -119,13 +132,13 @@ class _QRScanPageState extends State<QRScanPage> {
   }
 }
 
-showAlertDialog(BuildContext context) {
+showAlertDialogSettings(BuildContext context) {
   final urlTextFieldController = TextEditingController(
     text: global["server_url"],
   );
 
   Widget cancelButton = TextButton(
-    child: Text("Установить по-умолчанию"),
+    child: Text("Вернуть по-умолчанию"),
     onPressed: () {
       Navigator.of(context).pop();
       Fluttertoast.showToast(
@@ -172,6 +185,74 @@ showAlertDialog(BuildContext context) {
     ),
     actions: [
       cancelButton,
+      doneButton,
+    ],
+  );
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
+showAlertDialogQrCode(BuildContext context) {
+  final textFieldController = TextEditingController(
+    text: "00000003-0001-0001-0001-000000000000",
+  );
+
+  Widget doneButton = TextButton(
+    child: Text("Установить uuid"),
+    onPressed: () async {
+      Navigator.of(context).pop();
+
+      global["container_uuid"] = textFieldController.text;
+      log('glob cont uuid ${global["container_uuid"]}');
+
+      List<dynamic> box = jsonDecode(
+          await getContainerDescription(containerId: global["container_uuid"]));
+      box.forEach((elem) {
+        global[elem['type'].toLowerCase() + '_scanned'] = elem;
+        print('set ${elem['type'].toLowerCase() + '_scanned'}');
+      });
+
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (BuildContext context) => KernPage(),
+      ));
+
+      Fluttertoast.showToast(msg: 'Указанный uuid успешно установлен!');
+    },
+  );
+
+  AlertDialog alert = AlertDialog(
+    content: Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          "Ввести uuid контейнера вручную",
+          style: TextStyle(
+            fontSize: 18,
+          ),
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        TextField(
+          controller: textFieldController,
+          style: TextStyle(
+            fontSize: 12,
+          ),
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+          ),
+          keyboardType: TextInputType.number,
+          textInputAction: TextInputAction.done,
+        ),
+      ],
+    ),
+    actions: [
       doneButton,
     ],
   );

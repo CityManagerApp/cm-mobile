@@ -98,7 +98,7 @@ class _KernPage extends State<KernPage> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.6,
+                  width: MediaQuery.of(context).size.width * 0.75,
                   child: TextField(
                     controller: TextEditingController(
                       text: intervals[intervals.indexOf(interval)],
@@ -262,6 +262,7 @@ class _KernPage extends State<KernPage> {
   }
 
   initMacros() async {
+    global["pulled_intervals"] = [];
     if (!macrosUploaded) {
       macrosUploaded = true;
       List<dynamic> macros = jsonDecode(
@@ -278,11 +279,7 @@ class _KernPage extends State<KernPage> {
       for (var m in macros) {
         String interval = '${toJsonObject(m['meta'])['depth_start']}-'
             '${toJsonObject(m['meta'])['depth_end']}';
-        if (global.containsKey("pulled_intervals")) {
-          global["pulled_intervals"].add(interval);
-        } else {
-          global["pulled_intervals"] = [interval];
-        }
+        global["pulled_intervals"].add(interval);
         print('init macro $interval');
         log('pulled: ${global["pulled_intervals"]}');
         addInterval(
@@ -376,13 +373,16 @@ class _KernPage extends State<KernPage> {
                                 SizedBox(
                                   height: 8,
                                 ),
-                                Text(
-                                  "Фотографии пока не загружены. "
-                                  "Загрузите фотографии из галереи "
-                                  "или сфотографируйте образцы керна",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Color(0xff666666),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "Фотографии пока не загружены. "
+                                    "Загрузите фотографии из галереи "
+                                    "или сфотографируйте образцы керна",
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Color(0xff666666),
+                                    ),
                                   ),
                                 ),
                                 SizedBox(
@@ -418,13 +418,7 @@ class _KernPage extends State<KernPage> {
                               ),
                             ),
                           ),
-                          SizedBox(
-                            height: 8,
-                          ),
                           ...intervalElements,
-                          // SizedBox(
-                          //   height: 8,
-                          // ),
                           FlatButton(
                             onPressed: () {
                               for (String i in intervals) {
