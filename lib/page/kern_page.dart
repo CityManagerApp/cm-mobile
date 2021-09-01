@@ -421,9 +421,11 @@ class _KernPage extends State<KernPage> {
                           ...intervalElements,
                           FlatButton(
                             onPressed: () {
+                              int index = 0;
                               for (String i in intervals) {
                                 uploadMacro(
                                   macroInfo: <String, String>{
+                                    'id': '$index',
                                     'interval': i,
                                     'text_description': global.containsKey(
                                             "macroinfo_text_description:$i")
@@ -433,6 +435,7 @@ class _KernPage extends State<KernPage> {
                                   },
                                   containerId: global["container_uuid"],
                                 );
+                                index++;
                               }
 
                               Fluttertoast.showToast(msg: 'Отправлено!');
@@ -747,3 +750,17 @@ class DrawerWidget extends StatelessWidget {
     );
   }
 }
+
+// showAlertDialogImagePicker(BuildContext context) {
+//   AlertDialog alert = AlertDialog(
+//     content: AddPhotosPage(),
+//     actions: [],
+//   );
+//
+//   showDialog(
+//     context: context,
+//     builder: (BuildContext context) {
+//       return alert;
+//     },
+//   );
+// }

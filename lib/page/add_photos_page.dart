@@ -29,60 +29,60 @@ class _AddPhotosPage extends State<AddPhotosPage> {
   getImage(ImageSource src) async {
     File img = await ImagePicker.pickImage(source: src);
 
-    // if (img != null) {
-    //   File cropped = await ImageCropper.cropImage(
-    //     sourcePath: img.path,
-    //     // aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
-    //     compressQuality: 100,
-    //     // maxWidth: 300,
-    //     // maxHeight: 700,
-    //     compressFormat: ImageCompressFormat.jpg,
-    //     androidUiSettings: AndroidUiSettings(
-    //       toolbarColor: Colors.blue,
-    //       toolbarTitle: "Выделите только необходимое",
-    //       toolbarWidgetColor: Colors.white,
-    //       backgroundColor: Colors.white,
-    //     ),
-    //   );
-    //
-    //   var croppedDecoded = await decodeImageFromList(cropped.readAsBytesSync());
-    //   print(
-    //       'decoded image dimensions: w${croppedDecoded.width}, h${croppedDecoded.height}');
-    //   selected = true;
-    //   selectedFile = Image.file(
-    //     cropped,
-    //     width: croppedDecoded.width > MAX_PHOTO_WIDTH
-    //         ? MAX_PHOTO_WIDTH
-    //         : croppedDecoded.width,
-    //   );
-    //
-    //   String t = selectedFile.image
-    //       .toString()
-    //       .substring(11, selectedFile.image.toString().length - 1 - 13);
-      String croppedBase64 = base64Encode(img.readAsBytesSync());
-    //   // String croppedBase64 = base64Encode(File(t).readAsBytesSync());
-    //
-    //   print('base64 $croppedBase64'); // 'log()' to see full
-    //
-      uploadImage(
-          imageBase64: croppedBase64,
-          containerId: global["container_uuid"],
+    if (img != null) {
+      File cropped = await ImageCropper.cropImage(
+        sourcePath: img.path,
+        // aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
+        compressQuality: 100,
+        // maxWidth: 300,
+        // maxHeight: 700,
+        compressFormat: ImageCompressFormat.jpg,
+        androidUiSettings: AndroidUiSettings(
+          toolbarColor: Colors.blue,
+          toolbarTitle: "Выделите только необходимое",
+          toolbarWidgetColor: Colors.white,
+          backgroundColor: Colors.white,
+        ),
       );
-    //
-    //
-    //   this.setState(() {
-    //     if (global.keys.contains('kern_photos')) {
-    //       global['kern_photos'].add(cropped);
-    //     } else {
-    //       global['kern_photos'] = [cropped];
-    //     }
-    //   });
-    // }
+
+      var croppedDecoded = await decodeImageFromList(cropped.readAsBytesSync());
+      selected = true;
+      selectedFile = Image.file(
+        cropped,
+        width: croppedDecoded.width > MAX_PHOTO_WIDTH
+            ? MAX_PHOTO_WIDTH
+            : croppedDecoded.width,
+      );
+
+      String t = selectedFile.image
+          .toString()
+          .substring(11, selectedFile.image
+          .toString()
+          .length - 1 - 13);
+      // String croppedBase64 = base64Encode(await img.readAsBytes());
+      String croppedBase64 = base64Encode(File(t).readAsBytesSync());
+
+      print('base64 $croppedBase64'); // 'log()' to see full
+
+      uploadImage(
+        imageBase64: croppedBase64,
+        containerId: global["container_uuid"],
+      );
+
+      this.setState(() {
+        if (global.keys.contains('kern_photos')) {
+          global['kern_photos'].add(cropped);
+        } else {
+          global['kern_photos'] = [cropped];
+        }
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       // appBar: AppBar(
       //   title: Text('${MyApp.title} / ${widget.currentInterval}'),
       //   toolbarHeight: 48,
@@ -103,12 +103,8 @@ class _AddPhotosPage extends State<AddPhotosPage> {
               children: <Widget>[
                 OutlineButton(
                   onPressed: () {
-                    print('Сфоткать');
-                    getImage(ImageSource.camera).then((completion) {
-                      Fluttertoast.showToast(
-                        msg: 'Фотка отправлена!',
-                      );
-                    });
+                    print('Сфотографировать');
+                    getImage(ImageSource.camera);
                   },
                   padding: EdgeInsets.all(10.0),
                   borderSide: BorderSide(color: Colors.blue),
@@ -120,7 +116,7 @@ class _AddPhotosPage extends State<AddPhotosPage> {
                     children: <Widget>[
                       Icon(Icons.photo_camera_outlined, color: Colors.blue),
                       SizedBox(height: 4),
-                      Text("Сфоткать",
+                      Text("Сфотографировать",
                           style: TextStyle(
                             color: Colors.blue,
                           )),

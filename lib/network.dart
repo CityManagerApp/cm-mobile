@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:io';
@@ -67,7 +68,7 @@ Future<String> uploadImage({
   DateTime now = new DateTime.now();
   var formatter = new DateFormat('yyyy.MM.dd hh:mm:ss');
   String formattedDate = formatter.format(now);
-  print('formated date $formattedDate');
+  log('formated date $formattedDate');
   final http.Response response = await http.post(
     '${global["server_url"]}/api/v1/postitem',
     headers: <String, String>{
@@ -85,6 +86,9 @@ Future<String> uploadImage({
         '"data":{"size": "0Mb", '
         '"base64": "$imageBase64", "original_file_name": "$formattedDate"}}',
   );
+  log('response: ${response.statusCode} ${response.body}');
+  Fluttertoast.showToast(
+      msg: 'response: ${response.statusCode} ${response.body}');
 }
 
 Future<String> uploadMacro({
@@ -96,10 +100,12 @@ Future<String> uploadMacro({
   String formattedDate = formatter.format(now);
   log('upload macro accessed ${macroInfo['interval']}, $containerId');
   String uploadMode = 'postitem';
+  var uuid = '';
   // если спуллено на ините то делаем только апдейт (уже создано)
   if (global.containsKey("pulled_intervals")) {
     if (global["pulled_intervals"].contains(macroInfo['interval'])) {
       uploadMode = 'updateitem';
+      uuid = '"uuid": "${macroInfo['id']}"';
     }
   }
   // сам запрос
@@ -109,6 +115,7 @@ Future<String> uploadMacro({
       'Content-Type': 'application/json; charset=UTF-8; Accept-Language=ru-RU',
     },
     body: '{'
+        '$uuid'
         '"parent_uuid": "$containerId",'
         '"name": "${macroInfo['interval']}",'
         '"type": "MACROINFO",'
@@ -134,28 +141,24 @@ Future<String> uploadMacro({
         '},'
         '"data": {}'
         '}',
-    // '{"parent_uuid":"$containerId",'
-    // '"name":"${macroInfo['interval']}",'
-    // '"type":"MACROINFO",'
-    // '"meta":{"leaf":true,'
-    // '"date_time":"$formattedDate",'
-    // '"depth_end":${macroInfo['interval'].split('-')[1]},'
-    // '"depth_start":${macroInfo['interval'].split('-')[0]},'
-    // '"description":"${macroInfo['text_description']}",'
-    // '"tree_visible":false,'
-    // '"label_date_time":{"label":"Дата и время создания"},'
-    // '"label_depth_end":{"label":"Конец интервала"},'
-    // '"label_depth_start":{"label":"Начало интервала"},'
-    // '"label_description":{"label":"Описание"}},"data":{}}',
     encoding: Encoding.getByName("utf-8"),
   );
   // если отправили новый то в дальнейшем нужно будет апдейтать только
   if (uploadMode == 'postitem') {
-    log('postitem ${macroInfo['interval']} response json: ${response.body} (${response.body.length}) : ${response.statusCode}');
-    if (global.containsKey("pulled_intervals")) {
-      global["pulled_intervals"].add(macroInfo['interval']);
-    } else {
-      global["pulled_intervals"] = [macroInfo['interval']];
+    log('postitem ${macroInfo['interval']} response json: ${response.body}'
+        '${json.decode(response.body)} '
+        '${json.decode(response.body)['uuid']} '
+        '(${response.body.length}) : ${response.statusCode}');
+
+    Fluttertoast.showToast(
+        msg: 'postitem ${macroInfo['interval']} response json: ${response.body}'
+            '${json.decode(response.body)} '
+            '${json.decode(response.body)['uuid']} '
+            '(${response.body.length}) : ${response.statusCode}');
+
+    if (!global.containsKey("pulled_intervals")) {
+      global["pulled_intervals"] = [];
     }
+    global["pulled_intervals"].add(macroInfo['interval']);
   }
 }
