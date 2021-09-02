@@ -57,10 +57,13 @@ class _AddMacroinfoText extends State<AddMacroinfoText> {
                 child: Text(
                   "Начало",
                   style: TextStyle(
-                    fontSize: 12,
+                    fontSize: 14,
                     color: Color(0xff666666),
                   ),
                 ),
+              ),
+              SizedBox(
+                height: 4,
               ),
               Align(
                 alignment: Alignment.topLeft,
@@ -79,10 +82,13 @@ class _AddMacroinfoText extends State<AddMacroinfoText> {
                 child: Text(
                   "Конец",
                   style: TextStyle(
-                    fontSize: 12,
+                    fontSize: 14,
                     color: Color(0xff666666),
                   ),
                 ),
+              ),
+              SizedBox(
+                height: 4,
               ),
               Align(
                 alignment: Alignment.topLeft,
