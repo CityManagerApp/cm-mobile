@@ -44,19 +44,59 @@ class _AddMacroinfoText extends State<AddMacroinfoText> {
         elevation: 3,
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Container(
-              margin: const EdgeInsets.all(15.0),
-              padding: const EdgeInsets.all(3.0),
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: Theme.of(context).accentColor,
-                  width: 1.5,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 32,
+              ),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "Начало",
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Color(0xff666666),
+                  ),
                 ),
               ),
-              child: SingleChildScrollView(
+              Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "${widget.currentInterval.split('-')[0]}",
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 32,
+              ),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "Конец",
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Color(0xff666666),
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  "${widget.currentInterval.split('-')[1]}",
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 32,
+              ),
+              SingleChildScrollView(
                 child: TextField(
                   style: TextStyle(
                     fontSize: 18,
@@ -73,16 +113,26 @@ class _AddMacroinfoText extends State<AddMacroinfoText> {
                     global["macroinfo_text_description:${widget.currentInterval}"] =
                         text;
                   },
-                  decoration: InputDecoration.collapsed(
-                      hintText: 'Ожидается описание интервала.'),
+                  decoration: InputDecoration(
+                    hintText: 'Ожидается описание интервала.',
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    border: OutlineInputBorder(
+                      // gapPadding: 4.0,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(8.0),
+                      ),
+                    ),
+                    labelText: 'Описание',
+                    labelStyle: TextStyle(fontSize: 20, letterSpacing: 1.0),
+                  ),
                   keyboardType: TextInputType.multiline,
-                  maxLines: 20,
+                  maxLines: 15,
                   autofocus: true,
                   textInputAction: TextInputAction.none,
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
