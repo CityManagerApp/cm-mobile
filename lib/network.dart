@@ -87,8 +87,8 @@ Future<String> uploadImage({
         '"base64": "$imageBase64", "original_file_name": "$formattedDate"}}',
   );
   log('response: ${response.statusCode} ${response.body}');
-  Fluttertoast.showToast(
-      msg: 'response: ${response.statusCode} ${response.body}');
+  // Fluttertoast.showToast(
+  //     msg: 'response: ${response.statusCode} ${response.body}');
 }
 
 Future<String> uploadMacro({
@@ -153,10 +153,10 @@ Future<String> uploadMacro({
         '$uuid '
         ': ${response.statusCode}');
 
-    Fluttertoast.showToast(
-        msg: 'postitem: '
-            '$uuid '
-            ': ${response.statusCode}');
+    // Fluttertoast.showToast(
+    //     msg: 'postitem: '
+    //         '$uuid '
+    //         ': ${response.statusCode}');
 
     if (!global.containsKey("pulled_intervals")) {
       global["pulled_intervals"] = [];
@@ -167,8 +167,8 @@ Future<String> uploadMacro({
   }
 
   log('updateitem: ${response.body}');
-  Fluttertoast.showToast(
-      msg: 'updateitem: '
-          '${macroInfo['id']} '
-          ': ${response.statusCode}');
+  // Fluttertoast.showToast(
+  //     msg: 'updateitem: '
+  //         '${macroInfo['id']} '
+  //         ': ${response.statusCode}');
 }

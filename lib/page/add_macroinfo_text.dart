@@ -47,35 +47,39 @@ class _AddMacroinfoText extends State<AddMacroinfoText> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            Text(
-              'Введите макроописание (сохранение текста выполняется автоматически):',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 18,
-              ),
-            ),
-            SizedBox(
-              height: 18,
-            ),
-            SingleChildScrollView(
-              child: TextField(
-                controller: TextEditingController(
-                  text: global.containsKey(
-                          "macroinfo_text_description:${widget.currentInterval}")
-                      ? global[
-                          "macroinfo_text_description:${widget.currentInterval}"]
-                      : 'Пустое описание.',
+            Container(
+              margin: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.all(3.0),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Theme.of(context).accentColor,
+                  width: 1.5,
                 ),
-                onChanged: (text) {
-                  global["macroinfo_text_description:${widget.currentInterval}"] =
-                      text;
-                },
-                decoration: InputDecoration.collapsed(
-                    hintText: 'Ожидается описание интервала.'),
-                keyboardType: TextInputType.multiline,
-                maxLines: 20,
-                autofocus: true,
-                textInputAction: TextInputAction.none,
+              ),
+              child: SingleChildScrollView(
+                child: TextField(
+                  style: TextStyle(
+                    fontSize: 18,
+                    letterSpacing: 1.0,
+                  ),
+                  controller: TextEditingController(
+                    text: global.containsKey(
+                            "macroinfo_text_description:${widget.currentInterval}")
+                        ? global[
+                            "macroinfo_text_description:${widget.currentInterval}"]
+                        : 'Пустое описание.',
+                  ),
+                  onChanged: (text) {
+                    global["macroinfo_text_description:${widget.currentInterval}"] =
+                        text;
+                  },
+                  decoration: InputDecoration.collapsed(
+                      hintText: 'Ожидается описание интервала.'),
+                  keyboardType: TextInputType.multiline,
+                  maxLines: 20,
+                  autofocus: true,
+                  textInputAction: TextInputAction.none,
+                ),
               ),
             ),
           ],
