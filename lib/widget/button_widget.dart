@@ -20,7 +20,7 @@ class ButtonWidget extends StatelessWidget {
           ),
         ),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: BorderRadius.circular(25.0),
         ),
         color: Theme.of(context).accentColor,
         padding: EdgeInsets.symmetric(horizontal: 18, vertical: 10),
