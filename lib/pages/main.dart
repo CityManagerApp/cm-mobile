@@ -4,22 +4,16 @@ import 'package:cm/widgets/button.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class MainPage extends StatefulWidget {
-  final String title;
-
-  const MainPage({
-    @required this.title,
-  });
-
   @override
   _MainPageState createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
   final List<Tab> tabs = <Tab>[
-    Tab(text: 'Main'),
-    Tab(text: 'Map'),
-    Tab(text: 'Notifications'),
-    Tab(text: 'Settings'),
+    Tab(text: 'Заявки'),
+    Tab(text: 'Карта'),
+    Tab(text: 'Уведомления'),
+    Tab(text: 'Настройки'),
   ];
 
   @override

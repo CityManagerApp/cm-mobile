@@ -25,7 +25,7 @@ class EntryPoint extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: title,
       theme: ThemeData(
-        buttonColor: const Color(0xffFFD466),
+        buttonColor: const Color(0xffFFB800),
         accentColor: const Color(0xffE5E5E5),
         primaryColor: const Color(0xff74cfb8),
         backgroundColor: const Color(0xffbbdfcc),

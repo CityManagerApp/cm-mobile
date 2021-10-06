@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class ButtonWidget extends StatelessWidget {
   final String text;
-  final VoidCallback onClicked;
+  final VoidCallback onTap;
 
   const ButtonWidget({
     @required this.text,
-    @required this.onClicked,
+    @required this.onTap,
     Key key,
   }) : super(key: key);
 
@@ -26,6 +26,6 @@ class ButtonWidget extends StatelessWidget {
         color: Theme.of(context).buttonColor,
         padding: EdgeInsets.symmetric(horizontal: 18, vertical: 10),
         textColor: Colors.white,
-        onPressed: onClicked,
+        onPressed: onTap,
       );
 }

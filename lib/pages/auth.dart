@@ -1,5 +1,4 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'package:cm/services/api.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -138,39 +137,7 @@ class _AuthPageState extends State<AuthPage> {
                       Expanded(
                         child: ButtonWidget(
                           text: "Войти",
-                          onClicked: () async {
-                            formKey.currentState.save();
-                            print('phone number saved');
-                            if (formKey.currentState.validate()) {
-                              // If the form is valid, display a snackbar. In the real world,
-                              // you'd often call a server or save the information in a database.
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                    'Phone number processing...',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                              );
-                            }
-
-                            var response = await http.post(
-                              Uri.parse('https://peaceful-cove-23510.herokuapp.com/client/register'),
-                              headers: <String, String>{
-                                'Content-Type': 'application/json; charset=UTF-8',
-                              },
-                              body: jsonEncode(<String, dynamic>{
-                                "cityId": 0,
-                                "email": "string@google.com",
-                                "firstName": "Timur",
-                                "lastName": "Nugaev",
-                                "password": "helloworld49",
-                                "phone": "+79518977157"
-                              }),
-                            );
-
-                            print('response ${response.body}');
-                          },
+                          onTap: onLoginTap,
                         ),
                       ),
                       Expanded(
@@ -187,7 +154,7 @@ class _AuthPageState extends State<AuthPage> {
                       Expanded(
                         child: ButtonWidget(
                           text: "Регистрация",
-                          onClicked: () {},
+                          onTap: onSignUpTap,
                         ),
                       ),
                     ],
@@ -201,6 +168,42 @@ class _AuthPageState extends State<AuthPage> {
     );
   }
 
+  void onLoginTap() async {
+    formKey.currentState.save();
+    if (formKey.currentState.validate()) {
+      print('phone number valid');
+      informUser('Номер телефона принят');
+      var phone = "+79518977157";
+      var password = "helloworld49";
+      var response = await Api.login(
+        phone: phone,
+        password: password,
+      );
+      if (Api.noErrors(response)) {
+        Navigator.pushNamed(context, '/main');
+      } else {
+        informUser('Что-то пошло не так :/');
+      }
+    }
+  }
+
+  void onSignUpTap() async {
+    var phone = "+79518997127";
+    var password = "helloworld49";
+    var response = await Api.signUp(
+      phone: phone,
+      password: password,
+    );
+    if (Api.noErrors(response)) {
+      informUser('Вы успешно зарегистрированы! Входим в систему...');
+      print("no errors found, automatically logging in...");
+      response = await Api.login(
+        phone: phone,
+        password: password,
+      );
+    }
+  }
+
   void updatePhoneNumber(String phoneNumber) async {
     PhoneNumber number = await PhoneNumber.getRegionInfoFromPhoneNumber(phoneNumber, 'RU');
 
@@ -209,6 +212,17 @@ class _AuthPageState extends State<AuthPage> {
     setState(() {
       this.number = number;
     });
+  }
+
+  void informUser(String msg) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          msg,
+          style: TextStyle(color: Colors.white),
+        ),
+      ),
+    );
   }
 
   @override

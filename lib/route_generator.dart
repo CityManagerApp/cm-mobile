@@ -1,4 +1,5 @@
 import 'package:cm/pages/auth.dart';
+import 'package:cm/pages/main.dart';
 import 'package:flutter/material.dart';
 
 class RouteGenerator {
@@ -8,6 +9,8 @@ class RouteGenerator {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(builder: (_) => AuthPage());
+      case '/main':
+        return MaterialPageRoute(builder: (_) => MainPage());
       default:
         return _errorRoute();
     }
