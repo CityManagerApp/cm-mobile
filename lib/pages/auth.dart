@@ -217,6 +217,7 @@ class _AuthPageState extends State<AuthPage> {
   void informUser(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        duration: Duration(milliseconds: 500),
         padding: const EdgeInsets.all(8.0),
         content: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32.0),
