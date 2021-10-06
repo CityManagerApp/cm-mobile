@@ -15,14 +15,15 @@ class ButtonWidget extends StatelessWidget {
         child: Text(
           text,
           style: TextStyle(
-            fontSize: 18,
+            fontSize: 15.2,
             letterSpacing: 1.0,
           ),
         ),
+        elevation: 5.0,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25.0),
+          borderRadius: BorderRadius.circular(20.0),
         ),
-        color: Theme.of(context).accentColor,
+        color: Theme.of(context).buttonColor,
         padding: EdgeInsets.symmetric(horizontal: 18, vertical: 10),
         textColor: Colors.white,
         onPressed: onClicked,
