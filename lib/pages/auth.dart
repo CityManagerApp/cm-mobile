@@ -18,7 +18,7 @@ class _AuthPageState extends State<AuthPage> {
 
   String initialCountry = 'RU';
 
-  PhoneNumber number = PhoneNumber(isoCode: 'RU');
+  PhoneNumber phoneNumber = PhoneNumber(isoCode: 'RU');
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +113,7 @@ class _AuthPageState extends State<AuthPage> {
                                   color: Colors.black,
                                   fontSize: 17,
                                 ),
-                                initialValue: number,
+                                initialValue: phoneNumber,
                                 textFieldController: controller,
                                 formatInput: true,
                                 keyboardType: TextInputType.numberWithOptions(signed: true, decimal: true),
@@ -204,22 +204,26 @@ class _AuthPageState extends State<AuthPage> {
     }
   }
 
-  void updatePhoneNumber(String phoneNumber) async {
-    PhoneNumber number = await PhoneNumber.getRegionInfoFromPhoneNumber(phoneNumber, 'RU');
+  void updatePhoneNumber(String phone) async {
+    PhoneNumber number = await PhoneNumber.getRegionInfoFromPhoneNumber(phone, 'RU');
 
     print('$number updated');
 
     setState(() {
-      this.number = number;
+      this.phoneNumber = number;
     });
   }
 
-  void informUser(String msg) {
+  void informUser(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text(
-          msg,
-          style: TextStyle(color: Colors.white),
+        padding: const EdgeInsets.all(8.0),
+        content: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 32.0),
+          child: Text(
+            message,
+            style: TextStyle(color: Colors.white),
+          ),
         ),
       ),
     );
