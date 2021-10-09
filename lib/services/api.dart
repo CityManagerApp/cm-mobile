@@ -3,10 +3,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 abstract class Api {
-
   static final _baseUrl = 'https://peaceful-cove-23510.herokuapp.com';
   static String _token = 'unknown';
-
 
   static Future<http.Response> login({String phone, String password}) async {
     var response = await http.post(
@@ -20,15 +18,17 @@ abstract class Api {
       }),
     );
     var respObject = jsonDecode(response.body);
-    if (respObject.containsKey('payload')) {
-      if (respObject['payload'].containsKey('identifier')) {
-        _token = respObject['payload']['identifier'];
-        print("token obtained: $_token");
+    if (respObject != null && respObject.containsKey('payload')) {
+      print(respObject);
+      if (respObject['payload'] != null) {
+        if (respObject['payload'].containsKey('identifier')) {
+          _token = respObject['payload']['identifier'];
+          print("token obtained: $_token");
+        }
       }
     }
     return response;
   }
-
 
   static Future<http.Response> signUp({String phone, String password}) async {
     var response = await http.post(
@@ -38,7 +38,7 @@ abstract class Api {
       },
       body: jsonEncode(<String, dynamic>{
         "cityId": 0,
-        "email": "unknown@unknown.unknown",
+        "email": "1unknown@unknown.unknown",
         "firstName": "Неизвестно",
         "lastName": "Неизвестно",
         "phone": "+79518977157",
@@ -47,7 +47,6 @@ abstract class Api {
     );
     return response;
   }
-
 
   static bool noErrors(http.Response response) {
     var respObject = jsonDecode(response.body);
@@ -58,5 +57,4 @@ abstract class Api {
     }
     return true;
   }
-
 }

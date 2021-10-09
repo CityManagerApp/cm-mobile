@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cm/widgets/button.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:http/http.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 class AuthPage extends StatefulWidget {
@@ -172,35 +173,40 @@ class _AuthPageState extends State<AuthPage> {
     formKey.currentState.save();
     if (formKey.currentState.validate()) {
       print('phone number valid');
-      informUser('Номер телефона принят');
-      var phone = "+79518977157";
-      var password = "helloworld49";
+      String phone = controller.text;
+      String password = "helloworld49";
       var response = await Api.login(
         phone: phone,
         password: password,
       );
       if (Api.noErrors(response)) {
+        informUser('Номер телефона принят');
         Navigator.pushNamed(context, '/main');
       } else {
-        informUser('Что-то пошло не так :/');
+        informUser('Такой пользователь не существует :/');
       }
     }
   }
 
   void onSignUpTap() async {
-    var phone = "+79518997127";
-    var password = "helloworld49";
-    var response = await Api.signUp(
+    print("sign up tap");
+    String phone = controller.text;
+    print("phone $phone");
+    String password = "helloworld49";
+    Future<Response> response = Api.signUp(
       phone: phone,
       password: password,
     );
-    if (Api.noErrors(response)) {
+    // print("response ${response.body}");
+    if (Api.noErrors(await response)) {
       informUser('Вы успешно зарегистрированы! Входим в систему...');
       print("no errors found, automatically logging in...");
-      response = await Api.login(
+      await Api.login(
         phone: phone,
         password: password,
       );
+    } else {
+      print("errors found: ${(await response).body}");
     }
   }
 

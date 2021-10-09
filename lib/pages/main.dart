@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:cm/widgets/button.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import 'main_tabs/issues.dart';
+
 class MainPage extends StatefulWidget {
   @override
   _MainPageState createState() => _MainPageState();
@@ -53,15 +55,9 @@ class _MainPageState extends State<MainPage> {
               ),
             ),
             TabBarView(
-              children: tabs.map((Tab tab) {
-                final String label = tab.text.toLowerCase();
-                return Center(
-                  child: Text(
-                    'This is the $label tab',
-                    style: const TextStyle(fontSize: 36),
-                  ),
-                );
-              }).toList(),
+              children: [
+                IssuesTab(),
+              ]
             ),
           ],
         ),
