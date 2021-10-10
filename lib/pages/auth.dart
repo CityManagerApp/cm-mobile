@@ -26,6 +26,7 @@ class _AuthPageState extends State<AuthPage> {
   Widget build(BuildContext context) {
     return Stack(
       clipBehavior: Clip.none,
+      alignment: AlignmentDirectional.bottomStart,
       children: [
         BackgroundColorWidget(),
         BackgroundImageWidget(),
