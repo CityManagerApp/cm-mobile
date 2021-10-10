@@ -1,5 +1,6 @@
 import 'package:cm/pages/auth.dart';
 import 'package:cm/pages/main.dart';
+import 'package:cm/pages/new_issue.dart';
 import 'package:flutter/material.dart';
 
 class RouteGenerator {
@@ -7,10 +8,12 @@ class RouteGenerator {
     final arg = settings.arguments;
 
     switch (settings.name) {
-      case '/':
+      case '/auth':
         return MaterialPageRoute(builder: (_) => AuthPage());
       case '/main':
         return MaterialPageRoute(builder: (_) => MainPage());
+      case '/new_issue':
+        return MaterialPageRoute(builder: (_) => NewIssuePage());
       default:
         return _errorRoute();
     }

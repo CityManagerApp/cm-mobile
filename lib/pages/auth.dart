@@ -1,4 +1,5 @@
 import 'package:cm/services/api.dart';
+import 'package:cm/widgets/background.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,21 +27,8 @@ class _AuthPageState extends State<AuthPage> {
     return Stack(
       clipBehavior: Clip.none,
       children: [
-        Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          alignment: Alignment.bottomCenter,
-          decoration: BoxDecoration(
-            color: Theme.of(context).backgroundColor,
-            // image: DecorationImage(
-            //   image: AssetImage(
-            //     "assets/icons/background-tree.png",
-            //   ),
-            //   fit: BoxFit.cover,
-            //   alignment: Alignment.bottomLeft,
-            // ),
-          ),
-        ),
+        BackgroundColorWidget(),
+        BackgroundImageWidget(),
         Scaffold(
           backgroundColor: Colors.transparent,
           body: Center(
@@ -49,22 +37,43 @@ class _AuthPageState extends State<AuthPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  "Здравствуйте!",
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontFamily: 'Roboto',
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.95),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child:
+                    Text(
+                      "Здравствуйте!",
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontFamily: 'Roboto',
+                        letterSpacing: 2,
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(
                   height: 16,
                 ),
-                Text(
-                  "Давайте познакомимся",
-                  style: TextStyle(
-                    color: Color(0xff323232),
-                    fontSize: 24,
-                    fontFamily: 'Roboto',
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.95),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child:
+                    Text(
+                      "Давайте познакомимся",
+                      style: TextStyle(
+                        color: Color(0xff323232),
+                        fontSize: 24,
+                        fontFamily: 'Roboto',
+                      ),
+                    ),
                   ),
                 ),
                 SizedBox(height: 24),
@@ -84,7 +93,7 @@ class _AuthPageState extends State<AuthPage> {
                     key: formKey,
                     child: Container(
                       child: SizedBox(
-                        width: MediaQuery.of(context).size.width / 2,
+                        width: MediaQuery.of(context).size.width / 1.2,
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -131,7 +140,7 @@ class _AuthPageState extends State<AuthPage> {
                 ),
                 const SizedBox(height: 20),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width / 2,
+                  width: MediaQuery.of(context).size.width / 1.2,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -174,7 +183,7 @@ class _AuthPageState extends State<AuthPage> {
     if (formKey.currentState.validate()) {
       print('phone number valid');
       String phone = controller.text;
-      String password = "helloworld49";
+      String password = "12345678";
       var response = await Api.login(
         phone: phone,
         password: password,
@@ -192,7 +201,7 @@ class _AuthPageState extends State<AuthPage> {
     print("sign up tap");
     String phone = controller.text;
     print("phone $phone");
-    String password = "helloworld49";
+    String password = "12345678";
     Future<Response> response = Api.signUp(
       phone: phone,
       password: password,

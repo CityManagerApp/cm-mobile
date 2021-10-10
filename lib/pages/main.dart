@@ -1,9 +1,13 @@
+import 'package:cm/pages/main_tabs/notifications.dart';
+import 'package:cm/widgets/background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cm/widgets/button.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'main_tabs/issues.dart';
+import 'main_tabs/map.dart';
+import 'main_tabs/settings.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -12,10 +16,10 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   final List<Tab> tabs = <Tab>[
-    Tab(text: 'Заявки'),
-    Tab(text: 'Карта'),
-    Tab(text: 'Уведомления'),
-    Tab(text: 'Настройки'),
+    Tab(text: '🏠'),
+    Tab(text: '🗺'),
+    Tab(text: '🔔'),
+    Tab(text: '⚙️'),
   ];
 
   @override
@@ -23,41 +27,31 @@ class _MainPageState extends State<MainPage> {
     return DefaultTabController(
       length: tabs.length,
       child: Scaffold(
-        bottomNavigationBar: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
-          child: Container(
-            height: 62,
-            decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor,
-              borderRadius: BorderRadius.circular(25.0),
-            ),
-            child: TabBar(
-              tabs: tabs,
-            ),
-          ),
-        ),
         body: Stack(
           clipBehavior: Clip.none,
           alignment: AlignmentDirectional.bottomStart,
           children: [
-            Container(
-              width: MediaQuery.of(context).size.width / 2,
-              height: MediaQuery.of(context).size.height / 2,
-              alignment: Alignment.bottomCenter,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(
-                    "assets/icons/background-tree.png",
-                  ),
-                  fit: BoxFit.cover,
-                  alignment: Alignment.center,
+            BackgroundColorWidget(),
+            BackgroundImageWidget(),
+            TabBarView(children: [
+              IssuesTab(),
+              MapTab(),
+              NotificationsTab(),
+              SettingsTab(),
+            ]),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16).copyWith(bottom: 32, top: 8),
+              child: Container(
+                height: 62,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.circular(25.0),
+                ),
+                child: TabBar(
+                  tabs: tabs,
+                  indicatorPadding: EdgeInsets.symmetric(horizontal: 20),
                 ),
               ),
-            ),
-            TabBarView(
-              children: [
-                IssuesTab(),
-              ]
             ),
           ],
         ),
