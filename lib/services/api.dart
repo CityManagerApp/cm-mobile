@@ -45,7 +45,7 @@ abstract class Api {
         "email": "1unknown@unknown.unknown",
         "firstName": "Неизвестно",
         "lastName": "Неизвестно",
-        "phone": "+79518977157",
+        "phone": phone,
         "password": password,
       }),
     );

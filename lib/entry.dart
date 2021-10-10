@@ -37,7 +37,7 @@ class EntryPoint extends StatelessWidget {
         ),
       ),
       // home: AuthPage(),
-      initialRoute: '/main',
+      initialRoute: '/auth',
       onGenerateRoute: RouteGenerator.generateRoute,
     );
   }

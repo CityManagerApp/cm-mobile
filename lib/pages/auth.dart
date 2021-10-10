@@ -210,10 +210,17 @@ class _AuthPageState extends State<AuthPage> {
     if (Api.noErrors(await response)) {
       informUser('Вы успешно зарегистрированы! Входим в систему...');
       print("no errors found, automatically logging in...");
-      await Api.login(
+
+      var responseLogin = await Api.login(
         phone: phone,
         password: password,
       );
+      if (Api.noErrors(responseLogin)) {
+        informUser('Номер телефона принят');
+        Navigator.pushNamed(context, '/main');
+      } else {
+        informUser('Такой пользователь не существует :/');
+      }
     } else {
       print("errors found: ${(await response).body}");
     }
