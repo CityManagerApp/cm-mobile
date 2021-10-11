@@ -12,7 +12,7 @@
 > The idea is that every resident of the city can create issues for those things that bother him ( example: a hole in the road). After the issue is created, you can track the status of its execution, communicate with the person who makes it
 You can also use the map to look at which things in general in the city write these issues
 
-### 👀 Look at the [demo-video](https://youtu.be/qcu_GgjCZmM) if you're interested! Here's the screenshot!
+### 👀 Look at the [demo-video](https://youtu.be/UF9tNgPuvlg) if you're interested! Here's the screenshot!
 ![](https://ia.wampi.ru/2021/10/10/tg_image_29383053332b296aaeb4bc51a.jpg)
 
 ### 🧑🏻‍💻  Meet the authors:
